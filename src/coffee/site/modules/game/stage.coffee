@@ -28,6 +28,9 @@ define [
 			"bird"
 		]
 
+		# scale the canvas based on touch ability i guess
+		isTouch: false
+
 		# game modules
 		camera: new Camera
 		bird: new Bird
@@ -50,6 +53,7 @@ define [
 
 			# resize the renderer to always match the window
 			window.addEventListener "resize" , @.onResize
+			window.addEventListener "touchstart" , @.onTouchStart
 
 		build: ->
 
@@ -66,12 +70,20 @@ define [
 
 		onResize: =>
 
+			# set canvas scale
+			if @.isTouch is true then mult = 2 else mult = 1
+
 			# get the width + height
-			@.height = window.innerHeight
-			@.width = window.innerWidth
+			@.height = window.innerHeight * mult
+			@.width = window.innerWidth * mult
 
 			# resize the renderer
 			@.renderer.setSize @.width , @.height
+
+		onTouchStart: =>
+			document.body.classList.add "is-touch"
+			@.isTouch = true
+			@.onResize()
 
 		render: =>
 

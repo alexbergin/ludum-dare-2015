@@ -16,7 +16,7 @@ define ->
 				vertices = [ "x" , "y" , "z" ]
 
 				# make sure props is valid
-				@.checkProps props
+				props = @.checkProps props
 
 				geometry.computeMorphNormals()
 

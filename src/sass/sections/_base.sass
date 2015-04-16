@@ -1,0 +1,23 @@
+html , body , main , section
+	position: absolute
+	overflow: hidden
+	height: 100%
+	width: 100%
+	left: 0
+	top: 0
+
+section
+	@include transition( all 0.25s ease-in-out )
+	@include scale( 0 )
+	z-index: 1
+	opacity: 0
+
+	&.not-visible *
+		display: none !important
+
+	&.active
+		@include scale( 1 )
+		z-index: 2
+		opacity: 1
+
+

@@ -1,0 +1,22 @@
+#preloader
+	background-color: black
+
+	.wrapper
+		background-color: tint( black , 30% )
+		position: absolute
+		overflow: hidden
+		margin: -3px 0 0 0
+		height: 5px
+		right: 25%
+		left: 25%
+		top: 50%
+
+		.progress
+			@include transition( all 0.2s ease-in-out )
+			@include translate( -100% , 0 )
+			background-color: white
+			position: absolute
+			height: 100%
+			width: 100%
+			left: 0
+			top: 0

@@ -18,13 +18,22 @@ define ->
 				# make sure props is valid
 				@.checkProps props
 
+				geometry.computeMorphNormals()
+
 				# to do: make class for material generation
 				# using this as the only material for now
 				material = new THREE.MeshNormalMaterial
-					shading: THREE.SmoothShading
+					morphTargets: true
+					morphNormals: true
+					vertexColors: THREE.FaceColors
+					shading: THREE.FlatShading
 
 				# create the mesh from our geometery and material
 				mesh = new THREE.MorphAnimMesh geometry , material
+
+				# make it animate if animate isn't undefined
+				if props.animation isnt undefined
+					mesh.duration = props.animation
 
 				# scale it
 				mesh.scale.set props.scale.x , props.scale.y , props.scale.z

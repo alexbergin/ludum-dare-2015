@@ -88,6 +88,7 @@ module.exports = function( grunt ) {
 				expand: true,
 				cwd: "src/",
 				src: [
+					"models/**",
 					"fonts/**"
 				],
 				dest: "app"
@@ -95,7 +96,8 @@ module.exports = function( grunt ) {
 			dist: {
 				expand: true,
 				cwd: "app/",
-				src: [ 
+				src: [
+					"models/**",
 					"images/**",
 					"fonts/**"
 				],

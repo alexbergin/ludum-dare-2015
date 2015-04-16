@@ -2,11 +2,13 @@ define [
 
 	# game modules
 	"site/modules/game/camera"
+	"site/modules/game/extends/bird"
 
 ] , (
 
 	# game modules
 	Camera
+	Bird
 
 ) ->
 
@@ -18,13 +20,17 @@ define [
 		# what modules to call .init() on
 		setupTasks: [
 			"camera"
+			"bird"
 		]
 
 		# what modules to call .loop() on
-		loopTasks: []
+		loopTasks: [
+			"bird"
+		]
 
 		# game modules
 		camera: new Camera
+		bird: new Bird
 
 		init: ->
 

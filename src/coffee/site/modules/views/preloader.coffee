@@ -47,6 +47,9 @@ define [
 			load = new Assets
 			@.assets = load.manifest
 
+			# make the three js loader
+			@.jsonLoader = new THREE.JSONLoader()
+
 		run: ->
 
 			# save the context for the load event
@@ -55,20 +58,33 @@ define [
 			# loop through all assets and make their tags
 			for asset in @.assets
 
-				# create the tag we're loading and give it a hidden class
-				tag = document.createElement asset.type
-				tag.setAttribute "class" , "preloading-el"
+				# see if it's an obj or something for threejs
+				if asset.type is "THREE"
 
-				# determine the name of the attribute we apply the src to
-				if asset.attr is undefined then attr = "src" else attr = asset.attr
+					# don't pass anything to the on load event once finished
+					@.jsonLoader.load asset.src , => @.onLoad()
 
-				# add the load event and append the tag to our preloader page
-				tag.addEventListener "load" , ->
-					self.onLoad @
+				# regular media like an image
+				else
 
-				# set the tag source so it can load
-				tag.setAttribute attr , asset.src
-				@.page.appendChild tag
+					# create the tag we're loading and give it a hidden class
+					tag = document.createElement asset.tag
+					tag.setAttribute "class" , "preloading-el"
+
+					# determine the name of the attribute we apply the src to
+					if asset.attr is undefined then attr = "src" else attr = asset.attr
+
+					# add asset type to tag, if it's defined
+					if asset.type isnt undefined
+						tag.setAttribute "type" , asset.type
+
+					# add the load event and append the tag to our preloader page
+					tag.addEventListener "load" , ->
+						self.onLoad @
+
+					# set the tag source so it can load
+					tag.setAttribute attr , asset.src
+					@.page.appendChild tag
 
 			# add delay to page transition out
 			setTimeout =>
@@ -77,8 +93,8 @@ define [
 
 		onLoad: ( tag ) =>
 
-			# remove the loaded element
-			tag.parentNode.removeChild tag
+			# remove the loaded element, if present
+			if tag isnt undefined then tag.parentNode.removeChild tag
 
 			# increment the load count
 			@.loaded++

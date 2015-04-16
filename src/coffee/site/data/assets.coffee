@@ -6,4 +6,7 @@ define ->
 
 	class Assets
 
-		manifest: []
+		manifest: [
+			src: "models/flamingo.js"
+			type: "THREE"
+		]

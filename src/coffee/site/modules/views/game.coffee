@@ -4,7 +4,7 @@ define ->
 	# actual "game" part of the site
 	# may or may not use this for interfacing
 	# between game and the rest of the site
-	class Stage
+	class Game
 
 		init: ->
 
@@ -18,3 +18,5 @@ define ->
 
 		# put game start stuff here here
 		reset: ->
+			
+			site.stage.loop = true

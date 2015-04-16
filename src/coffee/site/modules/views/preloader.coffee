@@ -8,6 +8,7 @@ define [
 
 ) ->
 
+	# used to preload all assets and control the page view
 	class Preloader
 
 		# manifest of asset sources and types
@@ -23,6 +24,7 @@ define [
 		# tasks to perform once preload is complete
 		tasks: [
 			"landing"
+			"game"
 			"stage"
 		]
 

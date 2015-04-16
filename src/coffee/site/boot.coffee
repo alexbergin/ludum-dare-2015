@@ -1,12 +1,17 @@
 define [
 
 	# run on start
-	"site/modules/preloader"
-	"site/modules/views"
+	"site/modules/views/preloader"
+	"site/modules/utils/views"
 
 	# run later
-	"site/modules/landing"
-	"site/modules/stage"
+	"site/modules/views/landing"
+	"site/modules/views/game"
+	"site/modules/game/stage"
+
+	# libs
+	"THREE"
+	"jquery"
 
 ] , (
 
@@ -16,7 +21,12 @@ define [
 
 	# run later
 	Landing
+	Game
 	Stage
+
+	# libs
+	THREE
+	$
 
 ) ->
 
@@ -35,6 +45,7 @@ define [
 
 			# run later
 			landing: new Landing
+			game: new Game
 			stage: new Stage
 
 			start: ->

@@ -167,7 +167,7 @@ module.exports = function( grunt ) {
 					paths: {
 						"classlist": "vendor/classlist/classList",
 						"jquery": "vendor/jquery/dist/jquery",
-						"PIXI": "vendor/pixi.js/bin/pixi.dev",
+						"THREE": "vendor/threejs/build/three",
 						"requestAnimationFrame": "vendor/requestAnimationFrame/app/requestAnimationFrame",
 						"SoundJS": "vendor/SoundJS/lib/soundjs-0.6.0.min"
 					}

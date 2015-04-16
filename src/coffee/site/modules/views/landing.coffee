@@ -27,4 +27,4 @@ define ->
 
 			# switch to the game page and tell it to run
 			site.views.render "stage"
-			site.stage.reset()
+			site.game.reset()

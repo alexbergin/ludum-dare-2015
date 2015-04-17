@@ -3,6 +3,6 @@
 <!--<!(endif)-->
 <!--(if target dist)><!-->
 {{! disable console on production }}
-<script>window.console = { log: function() {} };</script>
+<script>window.console = { log: function() {} , warn: function() {} , error: function() {} };</script>
 <script src="scripts/main.js"></script>
 <!--<!(endif)-->

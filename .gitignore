@@ -1,6 +1,4 @@
 .sass-cache
 node_modules
 dist
-app/scripts
-app/styles
-app/*.html
+app

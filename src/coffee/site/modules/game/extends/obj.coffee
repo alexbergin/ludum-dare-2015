@@ -1,4 +1,4 @@
-define ->
+define -> 
 
 	# used to load and place obj's on the stage
 	# a lot easier

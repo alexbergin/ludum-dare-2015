@@ -20,16 +20,13 @@ define ->
 
 				geometry.computeMorphNormals()
 
-				# to do: make class for material generation
-				# using this as the only material for now
-				material = new THREE.MeshNormalMaterial
-					morphTargets: true
-					morphNormals: true
-					vertexColors: THREE.FaceColors
-					shading: THREE.FlatShading
+				# basic material for cruise control to simplicity
+				material = new THREE.MeshBasicMaterial
+					shading: THREE.SmoothShading
+					color: props.color
 
 				# create the mesh from our geometery and material
-				mesh = new THREE.MorphAnimMesh geometry , material
+				mesh = new THREE.Mesh geometry , material
 
 				# make it animate if animate isn't undefined
 				if props.animation isnt undefined
@@ -69,5 +66,8 @@ define ->
 					# set the values for each vertex
 					if props[ prop ][ vertex ] is undefined
 						props[ prop ][ vertex ] = n
+
+			# add a color if there is none
+			if props.color is undefined then props.color = 0xffffff
 
 			return props

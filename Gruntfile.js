@@ -202,7 +202,7 @@ module.exports = function( grunt ) {
 				}
 			},
 			coffee: {
-				files: [ "src/coffee/**" ],
+				files: [ "src/coffee/**" , "src/models/**" ],
 				tasks: "coffee",
 				options: {
 					debounceDelay: 200

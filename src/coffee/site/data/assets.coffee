@@ -9,4 +9,10 @@ define ->
 		manifest: [
 			src: "models/json/balloon.js"
 			type: "THREE"
+		,
+			src: "models/json/fan/base.js"
+			type: "THREE"
+		,
+			src: "models/json/fan/blades.js"
+			type: "THREE"
 		]

@@ -10,10 +10,11 @@ define ->
 		build: ->
 
 			# store the camera in the alpha property
-			@.alpha = new THREE.PerspectiveCamera 75 , window.innerWidth / window.innerHeight , 1 , 2000
+			@.alpha = new THREE.PerspectiveCamera 66 , window.innerWidth / window.innerHeight , 1 , 2000
 
 			# position it
-			@.alpha.position.z = 50
+			@.alpha.position.x = @.alpha.position.y = @.alpha.position.z = 250
+			@.alpha.lookAt x: 0 , y: 0 , z: 0
 
 		addListeners: ->
 

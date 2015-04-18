@@ -2,13 +2,13 @@ define [
 
 	# game modules
 	"site/modules/game/camera"
-	"site/modules/game/extends/bird"
+	"site/modules/game/extends/fan"
 
 ] , (
 
 	# game modules
 	Camera
-	Bird
+	Fan
 
 ) ->
 
@@ -20,12 +20,12 @@ define [
 		# what modules to call .init() on
 		setupTasks: [
 			"camera"
-			"bird"
+			"fan"
 		]
 
 		# what modules to call .loop() on
 		loopTasks: [
-			"bird"
+			"fan"
 		]
 
 		# scale the canvas based on touch ability i guess
@@ -33,7 +33,7 @@ define [
 
 		# game modules
 		camera: new Camera
-		bird: new Bird
+		fan: new Fan
 
 		init: ->
 
@@ -59,7 +59,8 @@ define [
 
 			# create the THREE elements
 			@.scene = new THREE.Scene()
-			@.renderer = new THREE.WebGLRenderer()
+			@.renderer = new THREE.WebGLRenderer
+			@.renderer.setClearColor 0xF9FDFF
 
 			# append to the page
 			@.page.appendChild @.renderer.domElement

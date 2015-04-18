@@ -2,12 +2,16 @@ define [
 
 	# game modules
 	"site/modules/game/camera"
+	"site/modules/game/input"
+	"site/modules/game/extends/player"
 	"site/modules/game/extends/fan"
 
 ] , (
 
 	# game modules
 	Camera
+	Input
+	Player
 	Fan
 
 ) ->
@@ -20,12 +24,15 @@ define [
 		# what modules to call .init() on
 		setupTasks: [
 			"camera"
+			"player"
+			"input"
 			"fan"
 		]
 
 		# what modules to call .loop() on
 		loopTasks: [
 			"fan"
+			"player"
 		]
 
 		# scale the canvas based on touch ability i guess
@@ -33,7 +40,9 @@ define [
 
 		# game modules
 		camera: new Camera
+		input: new Input
 		fan: new Fan
+		player: new Player
 
 		init: ->
 

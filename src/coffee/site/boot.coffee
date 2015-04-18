@@ -3,6 +3,7 @@ define [
 	# run on start
 	"site/modules/views/preloader"
 	"site/modules/utils/views"
+	"site/modules/utils/math"
 
 	# run later
 	"site/modules/views/landing"
@@ -19,6 +20,7 @@ define [
 	# run on start
 	Preloader
 	Views
+	MathUtil
 
 	# run later
 	Landing
@@ -44,6 +46,7 @@ define [
 			# run on start
 			preloader: new Preloader
 			views: new Views
+			math: new MathUtil
 
 			# run later
 			landing: new Landing
@@ -55,6 +58,7 @@ define [
 				# property names to call "init" on
 				# when the site is ready to run
 				run = [
+					"math"
 					"views"
 					"preloader"
 				]

@@ -27,7 +27,7 @@ define [
 
 			@.clock = new THREE.Clock()
 			@.build(
-				src: "models/monkey.js",
+				src: "models/json/balloon.js",
 				color: 0xff0000
 				scale:
 					x: 3 , y: 3 , z: 3

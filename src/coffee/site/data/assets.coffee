@@ -7,6 +7,6 @@ define ->
 	class Assets
 
 		manifest: [
-			src: "models/monkey.js"
+			src: "models/json/balloon.js"
 			type: "THREE"
 		]

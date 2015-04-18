@@ -16,7 +16,7 @@ define [
 
 		# what velocity values get multiplied
 		# by on each loop
-		friction: 0.9
+		friction: 0.95
 
 		# added to the y axis each loop
 		gravity: 0.2

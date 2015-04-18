@@ -69,8 +69,11 @@ define [
 			# create the THREE elements
 			@.scene = new THREE.Scene()
 			@.renderer = new THREE.WebGLRenderer
-			@.renderer.setClearColor 0xF9FDFF
 
+			# set renderer preferences
+			@.renderer.setClearColor 0xF9FDFF
+			@.renderer.shadowMapType = THREE.PCFSoftShadowMap
+			
 			# append to the page
 			@.page.appendChild @.renderer.domElement
 

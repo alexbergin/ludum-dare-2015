@@ -2,6 +2,15 @@ define ->
 
 	class Input
 
+		startX: 0
+		x: 0
+
+		startY: 0
+		y: 0
+
+		leftDown: false
+		rightDown: false
+
 		init: ->
 			@.addListeners()
 
@@ -36,6 +45,17 @@ define ->
 
 		onMouseMove: ( e ) =>
 
+			# get the current mouse position
+			@.x = e.clientX
+			@.y = e.clientY
+
+			# position the camera
+			if @.rightDown is true then @.updateCamera()
+
+			# move the balloon
+			if @.leftDown is true then @.updateBalloon()
+
+
 		onMouseDown: ( e ) =>
 
 			# stop default
@@ -45,8 +65,8 @@ define ->
 			switch e.which
 
 				# call the right one
-				when 1 then @.onLeftDown
-				when 3 then @.onRightDown
+				when 1 then @.onLeftDown()
+				when 3 then @.onRightDown()
 
 		onMouseUp: ( e ) =>
 
@@ -57,13 +77,70 @@ define ->
 			switch e.which
 
 				# call the right one
-				when 1 then @.onLeftUp
-				when 3 then @.onRightUp
+				when 1 then @.onLeftUp()
+				when 3 then @.onRightUp()
 
 		onLeftUp: ->
 
+			# release the balloon
+			@.leftDown = false
+
 		onLeftDown: ->
+
+			# get starting position
+			if @.leftDown is false and @.rightDown is false
+				@.startX = @.x
+				@.startY = @.y
+
+			# grab the balloon
+			@.leftDown = true
 
 		onRightUp: ->
 
+			# release the camera
+			@.rightDown = false
+
 		onRightDown: ->
+
+			# get starting position
+			if @.leftDown is false and @.rightDown is false
+				@.startX = @.x
+				@.startY = @.y
+
+			#grab the camera
+			@.rightDown = true
+
+		updateCamera: ->
+
+			# get and contain the delta for movement
+			delta = ( @.startX - @.x ) * 0.5
+
+			# apply the movement
+			site.stage.player.angle += delta
+
+			# reset the difference
+			@.startX = @.x
+
+		updateBalloon: ->
+
+			# get the balloon's velocity & viewing angle
+			balloon = site.stage.player.velocity
+			angle = site.stage.player.angle
+
+			# get our deltas
+			x = ( @.startX - @.x ) * 0.2
+			y = ( @.startY - @.y ) * 0.2
+
+			# set our input velocity
+			xVel = Math.sin( Math.radians( angle - 90 )) * x
+			zVel = Math.cos( Math.radians( angle - 90 )) * x
+			yVel = y
+
+			# apply the input to the balloon
+			balloon.x += xVel
+			balloon.y += yVel
+			balloon.z += zVel
+
+			# reset the delta
+			@.startX = @.x
+			@.startY = @.y

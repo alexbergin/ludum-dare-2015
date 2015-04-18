@@ -1,5 +1,12 @@
 #stage
 	background-color: #F4FCFF
+
+	cursor: -webkit-grab
+	cursor: grab
+
+	&:active
+		cursor: -webkit-grabbing
+		cursor: grabbing
 	
 	canvas
 		@include transform-origin( top , left )

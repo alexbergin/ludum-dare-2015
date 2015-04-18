@@ -11,6 +11,7 @@ define [
 
 	# libs
 	"THREE"
+	"Howl"
 	"jquery"
 
 ] , (
@@ -26,6 +27,7 @@ define [
 
 	# libs
 	THREE
+	Howl
 	$
 
 ) ->

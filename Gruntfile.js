@@ -208,6 +208,13 @@ module.exports = function( grunt ) {
 					debounceDelay: 200
 				}
 			},
+			models: {
+				files: [ "src/models/**" ],
+				tasks: "copy:app",
+				options: {
+					debounceDelay: 200
+				}
+			},
 			mustache: {
 				files: [ "src/mustache/**" ],
 				tasks: ["mustache_render","targethtml:dev","html-prettyprinter"],

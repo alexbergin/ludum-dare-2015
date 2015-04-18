@@ -5,6 +5,7 @@ require.config
 
 	paths:
 		"classlist": "vendor/classlist/classList"
+		"one": "vendor/color/one-color"
 		"jquery": "vendor/jquery/dist/jquery"
 		"THREE": "vendor/threejs/build/three"
 		"Howl": "vendor/howler.js/howler"

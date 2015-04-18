@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "classlist": "~2013.5.14",
+    "color": "*",
     "jquery": "~2.1.1",
     "threejs": "*",
     "howler.js": "~1.1.25",

@@ -14,6 +14,7 @@ define [
 	"THREE"
 	"Howl"
 	"jquery"
+	"one"
 
 ] , (
 
@@ -31,6 +32,7 @@ define [
 	THREE
 	Howl
 	$
+	one
 
 ) ->
 

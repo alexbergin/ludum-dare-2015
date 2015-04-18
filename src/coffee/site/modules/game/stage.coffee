@@ -3,6 +3,7 @@ define [
 	# game modules
 	"site/modules/game/camera"
 	"site/modules/game/input"
+	"site/modules/game/light"
 	"site/modules/game/extends/player"
 	"site/modules/game/extends/fan"
 
@@ -11,6 +12,7 @@ define [
 	# game modules
 	Camera
 	Input
+	Light
 	Player
 	Fan
 
@@ -23,6 +25,7 @@ define [
 
 		# what modules to call .init() on
 		setupTasks: [
+			"light"
 			"camera"
 			"player"
 			"input"
@@ -40,6 +43,7 @@ define [
 
 		# game modules
 		camera: new Camera
+		light: new Light
 		input: new Input
 		fan: new Fan
 		player: new Player
@@ -72,8 +76,9 @@ define [
 
 			# set renderer preferences
 			@.renderer.setClearColor 0xF9FDFF
+			@.renderer.shadowMapEnabled = true
 			@.renderer.shadowMapType = THREE.PCFSoftShadowMap
-			
+
 			# append to the page
 			@.page.appendChild @.renderer.domElement
 

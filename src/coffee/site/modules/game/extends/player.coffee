@@ -110,13 +110,18 @@ define [
 
 		updateCamera: ->
 
-			# store the camera
+			# store the camera & light
 			camera = site.stage.camera.alpha
+			light = site.stage.light.spot
 
 			# get the position of the balloon
 			x = @.balloon.position.x
 			y = @.balloon.position.y
 			z = @.balloon.position.z
+
+			# update light position
+			light.position.set( x , y + 1000 , z )
+			light.target = @.balloon
 
 			# position the camera
 			camera.position.x = x + ( Math.sin( Math.radians( @.angle )) * @.distance )
@@ -125,3 +130,4 @@ define [
 
 			# look at the balloon
 			camera.lookAt x: x , y: y , z: z
+			light.lookAt x: x , y: y , z: z

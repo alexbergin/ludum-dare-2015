@@ -37,7 +37,7 @@ define [
 			)
 
 			# temp wall
-			geometry = new THREE.PlaneBufferGeometry( 500 , 500 , 500 , 500 )
+			geometry = new THREE.PlaneBufferGeometry( 5000 , 5000 , 500 , 500 )
 			material = new THREE.MeshBasicMaterial
 				color: 0xE6F3F7
 			@.landscape = new THREE.Mesh geometry , material
@@ -45,11 +45,15 @@ define [
 			@.landscape.rotation.x = -90 * ( Math.PI / 180 )
 			@.landscape.position.y = -90
 
+			# shadows
+			@.landscape.castShadow = true
+			@.landscape.receiveShadow = true
+
 		ready: ( mesh , name ) =>
 			@[name] = mesh
 
 		loop: =>
-			@.blades?.rotation.y += 0.08
+			@.blades?.rotation.y -= 0.08
 			@.angle -= 0.5
 
 			site.stage.camera.alpha.position.x = Math.sin( @.angle * ( Math.PI / 180 )) * 380

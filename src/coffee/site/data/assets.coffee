@@ -7,6 +7,6 @@ define ->
 	class Assets
 
 		manifest: [
-			src: "models/flamingo.js"
+			src: "models/monkey.js"
 			type: "THREE"
 		]

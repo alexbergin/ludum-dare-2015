@@ -13,7 +13,7 @@ define ->
 			@.alpha = new THREE.PerspectiveCamera 75 , window.innerWidth / window.innerHeight , 1 , 2000
 
 			# position it
-			@.alpha.position.z = 300
+			@.alpha.position.z = 50
 
 		addListeners: ->
 

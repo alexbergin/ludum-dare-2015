@@ -27,9 +27,11 @@ define [
 
 			@.clock = new THREE.Clock()
 			@.build(
-				src: "models/flamingo.js"
+				src: "models/monkey.js",
+				color: 0xff0000
+				scale:
+					x: 3 , y: 3 , z: 3
 				callback: @.ready
-				animation: 1000
 			)
 
 			@.addListeners()
@@ -42,7 +44,6 @@ define [
 		loop: =>
 
 			# peform our animation
-			@.character.updateAnimation( 1000 * @.clock.getDelta())
 			@.position()
 
 

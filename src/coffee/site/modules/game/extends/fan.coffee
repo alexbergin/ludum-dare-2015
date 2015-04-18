@@ -16,7 +16,7 @@ define [
 
 			@.build(
 				src: "models/json/fan/base.js",
-				color: 0xF9FDFF
+				color: 0xE6F3F7
 				scale:
 					x: 100 , y: 100 , z: 100
 				position:
@@ -27,7 +27,7 @@ define [
 
 			@.build(
 				src: "models/json/fan/blades.js",
-				color: 0xFF6666
+				color: 0xD65555
 				scale:
 					x: 100 , y: 100 , z: 100
 				position:
@@ -37,9 +37,9 @@ define [
 			)
 
 			# temp wall
-			geometry = new THREE.PlaneBufferGeometry( 5000 , 5000 , 500 , 500 )
+			geometry = new THREE.PlaneBufferGeometry( 500000 , 500000 , 500 , 500 )
 			material = new THREE.MeshBasicMaterial
-				color: 0xE6F3F7
+				color: 0xF9FDFF
 			@.landscape = new THREE.Mesh geometry , material
 			site.stage.scene.add @.landscape
 			@.landscape.rotation.x = -90 * ( Math.PI / 180 )
@@ -53,11 +53,6 @@ define [
 			@[name] = mesh
 
 		loop: =>
-			@.blades?.rotation.y -= 0.08
-			@.angle -= 0.5
-
-			site.stage.camera.alpha.position.x = Math.sin( @.angle * ( Math.PI / 180 )) * 380
-			site.stage.camera.alpha.position.z = Math.cos( @.angle * ( Math.PI / 180 )) * 380
-			site.stage.camera.alpha.lookAt( x:0 , y:0 , z: 0 )
+			@.blades?.rotation.y -= 0.15
 
 

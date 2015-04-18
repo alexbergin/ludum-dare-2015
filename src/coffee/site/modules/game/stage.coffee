@@ -74,8 +74,11 @@ define [
 			@.scene = new THREE.Scene()
 			@.renderer = new THREE.WebGLRenderer
 
+			# scene preferences
+			@.scene.fog = new THREE.Fog 0xCDE6F2 , 0 , 7500
+
 			# set renderer preferences
-			@.renderer.setClearColor 0xF9FDFF
+			@.renderer.setClearColor 0xCDE6F2
 			@.renderer.shadowMapEnabled = true
 			@.renderer.shadowMapType = THREE.PCFSoftShadowMap
 

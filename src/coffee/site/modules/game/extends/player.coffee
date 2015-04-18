@@ -16,7 +16,7 @@ define [
 
 		# what velocity values get multiplied
 		# by on each loop
-		friction: 0.95
+		friction: 0.98
 
 		# added to the y axis each loop
 		gravity: 0.2
@@ -38,7 +38,7 @@ define [
 			# make the balloon and add to scene
 			@.build(
 				src: "models/json/balloon.js",
-				color: 0x42DFFF
+				color: 0x87FFB7
 				scale:
 					x: 30 , y: 30 , z: 30
 
@@ -85,13 +85,6 @@ define [
 				else
 					@.velocity[ vertex ] = 0
 
-				# make sure we don't kill memory
-				if Math.abs( @.rotation[ vertex ] ) > 0.01
-					@.rotation[ vertex ] *= @.friction
-
-				else
-					@.rotation[ vertex ] = 0
-
 			# apply gravity
 			@.velocity.y += @.gravity
 
@@ -103,7 +96,6 @@ define [
 			# update position + rotate
 			for vertex in vertices
 				@.balloon.position[ vertex ] += @.velocity[ vertex ]
-				@.balloon.rotation[ vertex ] += @.rotation[ vertex ]
 
 
 		detectCollision: ->

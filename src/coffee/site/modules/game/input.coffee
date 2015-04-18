@@ -123,13 +123,13 @@ define ->
 
 		updateBalloon: ->
 
-			# get the balloon's velocity & viewing angle
+			# get the balloon's velocity, & viewing angle
 			balloon = site.stage.player.velocity
 			angle = site.stage.player.angle
 
 			# get our deltas
-			x = ( @.startX - @.x ) * 0.2
-			y = ( @.startY - @.y ) * 0.2
+			x = ( @.startX - @.x ) * 0.02
+			y = ( @.startY - @.y ) * 0.04
 
 			# set our input velocity
 			xVel = Math.sin( Math.radians( angle - 90 )) * x

@@ -30,10 +30,10 @@ define ->
 			@.spot.shadowCameraVisible = @.debug
 			@.spot.shadowCameraNear = 100
 			@.spot.shadowCameraFar = 2000
-			@.spot.shadowCameraLeft = -1500
-			@.spot.shadowCameraRight = 1500
-			@.spot.shadowCameraTop = 1500
-			@.spot.shadowCameraBottom = -1500
+			@.spot.shadowCameraLeft = -2500
+			@.spot.shadowCameraRight = 2500
+			@.spot.shadowCameraTop = 2500
+			@.spot.shadowCameraBottom = -2500
 
 		place: ->
 

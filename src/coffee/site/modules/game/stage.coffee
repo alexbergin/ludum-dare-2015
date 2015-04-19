@@ -113,6 +113,9 @@ define [
 
 		onTouchStart: =>
 			document.body.classList.add "is-touch"
+			@.renderer.shadowMapEnabled = false
+			@.camera.alpha.far = 5000
+			@.light.spot.castShadow = false
 			@.isTouch = true
 			@.onResize()
 

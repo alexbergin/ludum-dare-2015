@@ -3,7 +3,7 @@ define ->
 	class Collision
 
 		# multiply initial velocity by this
-		rebound: 0.75
+		rebound: 1
 
 		# objects we're testing
 		objects: []
@@ -30,12 +30,12 @@ define ->
 		test: ( object ) ->
 
 			# balloon dimensions
-			w = d = 20
-			h = 40
+			w = d = 50
+			h = 90
 
 			# balloon position
 			x = @.player.balloon.position.x
-			y = @.player.balloon.position.y
+			y = @.player.balloon.position.y + 45
 			z = @.player.balloon.position.z
 
 			# points that define the box
@@ -61,8 +61,13 @@ define ->
 		
 		landscape: ->
 
+			# ground
 			if @.player.balloon.position.y <= 0
 				@.collide "y" , 1
+
+			# glass ceiling
+			if @.player.balloon.position.y >= 2000
+				@.collide "y" , -1
 
 		collide: ( axis , direction ) ->
 			@.player.velocity[ axis ] = direction * Math.abs( @.player.velocity[ axis ]) * @.rebound

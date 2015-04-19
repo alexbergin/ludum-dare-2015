@@ -29,7 +29,7 @@ define ->
 			@.spot.shadowDarkness = @.shadowDarkness
 			@.spot.shadowCameraVisible = @.debug
 			@.spot.shadowCameraNear = 100
-			@.spot.shadowCameraFar = 2000
+			@.spot.shadowCameraFar = 3000
 			@.spot.shadowCameraLeft = -2500
 			@.spot.shadowCameraRight = 2500
 			@.spot.shadowCameraTop = 2500

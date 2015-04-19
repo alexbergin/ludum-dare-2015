@@ -46,10 +46,6 @@ define ->
 					mesh.position[ vertex ] = props.position[ vertex ]
 					mesh.rotation[ vertex ] = props.rotation[ vertex ]
 
-				# add the mesh to the stage and return it
-				site.stage.scene.add mesh
-				props.callback?( mesh )
-
 				# check collision property
 				if props.collision isnt undefined
 
@@ -57,6 +53,14 @@ define ->
 					# and append to the collision array
 					mesh.collision = props.collision
 					site.stage.collision.add mesh
+
+				# define these for rotate-able objects
+				if props.direction isnt undefined then mesh.direction = props.direction
+				if props.vertical isnt undefined then mesh.vertical = props.vertical
+
+				# add the mesh to the stage and return it
+				site.stage.scene.add mesh
+				props.callback?( mesh )
 
 		checkProps: ( props ) ->
 

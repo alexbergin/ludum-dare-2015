@@ -7,6 +7,7 @@ define [
 	"site/modules/game/collision"
 	"site/modules/game/extends/landscape"
 	"site/modules/game/extends/player"
+	"site/modules/game/extends/wall"
 	"site/modules/game/extends/fan"
 
 ] , (
@@ -18,6 +19,7 @@ define [
 	Collision
 	Landscape
 	Player
+	Wall
 	Fan
 
 ) ->
@@ -35,6 +37,7 @@ define [
 			"landscape"
 			"player"
 			"input"
+			"wall"
 			"fan"
 		]
 
@@ -57,6 +60,7 @@ define [
 		input: new Input
 		fan: new Fan
 		player: new Player
+		wall: new Wall
 
 		init: ->
 

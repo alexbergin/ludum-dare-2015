@@ -191,14 +191,14 @@ define [
 			strength = 1 - ( Math.max( Math.min( diffVert / 512 , 1 ) , 0 ))
 
 			# apply lateral movement
-			if vertical isnt "x" then player.velocity.x += diffX * 0.05 * strength
-			if vertical isnt "y" then player.velocity.y += diffY * 0.05 * strength
-			if vertical isnt "z" then player.velocity.z += diffZ * 0.05 * strength
+			if vertical isnt "x" then player.velocity.x += ( diffX * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
+			if vertical isnt "y" then player.velocity.y += ( diffY * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
+			if vertical isnt "z" then player.velocity.z += ( diffZ * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
 
-			# not as much bouncing, please
-			if vertical isnt "x" then player.velocity.x *= 1 - ( strength / 9 )
-			if vertical isnt "y" then player.velocity.y *= 1 - ( strength / 9 )
-			if vertical isnt "z" then player.velocity.z *= 1 - ( strength / 9 )
+			# # not as much bouncing, please
+			# if vertical isnt "x" then player.velocity.x *= 1 - ( strength / 9 )
+			# if vertical isnt "y" then player.velocity.y *= 1 - ( strength / 9 )
+			# if vertical isnt "z" then player.velocity.z *= 1 - ( strength / 9 )
 
 			# apply vertical movement
 			if vertical is "x" then player.velocity.x += direction * 1.0 * strength

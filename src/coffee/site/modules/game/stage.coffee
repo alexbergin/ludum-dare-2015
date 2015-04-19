@@ -43,6 +43,7 @@ define [
 			"fan"
 			"player"
 			"collision"
+			"camera"
 		]
 
 		# scale the canvas based on touch ability i guess

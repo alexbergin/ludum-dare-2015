@@ -14,15 +14,26 @@ define [
 		base: []
 
 		init: ->
-			@.make
-				rotationAxis:
-					x: -0.08
 
-				position:
-					x: 0 , y: 0 , z: 0
+			x = -1500
+			while x < 1500
 
-				rotation:
-					x: 0 , y: 90 , z: 0
+				y = -1500
+				while y < 1500
+
+					@.make
+						rotationAxis:
+							x: -0.08
+
+						position:
+							x: x , y: 0 , z: y
+
+						rotation:
+							x: 0 , y: 90 , z: 0
+
+					y += 600
+
+				x += 600
 
 		make: ( props ) =>
 

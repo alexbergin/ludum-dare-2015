@@ -2,6 +2,11 @@ define ->
 
 	class Camera
 
+		position:
+			x: 0
+			y: 0
+			z: 0
+
 		init: ->
 
 			@.build()
@@ -26,3 +31,17 @@ define ->
 			# update the apsect ratio and camera
 			@.alpha.aspect = window.innerWidth / window.innerHeight
 			@.alpha.updateProjectionMatrix()
+
+		loop: =>
+
+			vertices = [ "x" , "y" , "z" ]
+
+			for vertex in vertices
+
+				diff = @.alpha.position[ vertex ] - @.position[ vertex ]
+				
+				if Math.abs( diff ) > 0.00001
+					@.alpha.position[ vertex ] -= diff * 0.1
+
+				else
+					@.alpha.position[ vertex ] = @.position[ vertex ]

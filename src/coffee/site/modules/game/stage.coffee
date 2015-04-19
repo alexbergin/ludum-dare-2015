@@ -4,6 +4,7 @@ define [
 	"site/modules/game/camera"
 	"site/modules/game/input"
 	"site/modules/game/light"
+	"site/modules/game/extends/landscape"
 	"site/modules/game/extends/player"
 	"site/modules/game/extends/fan"
 
@@ -13,6 +14,7 @@ define [
 	Camera
 	Input
 	Light
+	Landscape
 	Player
 	Fan
 
@@ -27,6 +29,7 @@ define [
 		setupTasks: [
 			"light"
 			"camera"
+			"landscape"
 			"player"
 			"input"
 			"fan"
@@ -44,6 +47,7 @@ define [
 		# game modules
 		camera: new Camera
 		light: new Light
+		landscape: new Landscape
 		input: new Input
 		fan: new Fan
 		player: new Player

@@ -18,12 +18,14 @@ define ->
 				# make sure props is valid
 				props = @.checkProps props
 
+				# set up shading
 				geometry.computeMorphNormals()
+				color = props.color
 
 				# basic material for cruise control to simplicity
-				material = new THREE.MeshBasicMaterial
+				material = new THREE.MeshLambertMaterial
 					shading: THREE.SmoothShading
-					color: props.color
+					emissive: color
 
 				# create the mesh from our geometery and material
 				mesh = new THREE.Mesh geometry , material
@@ -31,6 +33,10 @@ define ->
 				# make it animate if animate isn't undefined
 				if props.animation isnt undefined
 					mesh.duration = props.animation
+
+				# shadows
+				mesh.castShadow = true
+				mesh.receiveShadow = true
 
 				# scale it
 				mesh.scale.set props.scale.x , props.scale.y , props.scale.z

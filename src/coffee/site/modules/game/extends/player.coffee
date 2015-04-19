@@ -38,7 +38,7 @@ define [
 			# make the balloon and add to scene
 			@.build(
 				src: "models/json/balloon.js",
-				color: 0x87FFB7
+				color: 0x9BE7FF
 				scale:
 					x: 30 , y: 30 , z: 30
 

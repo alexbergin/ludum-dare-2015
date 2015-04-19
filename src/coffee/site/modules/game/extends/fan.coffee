@@ -36,19 +36,6 @@ define [
 					@.ready( mesh , "blades" )
 			)
 
-			# temp wall
-			geometry = new THREE.PlaneBufferGeometry( 500000 , 500000 , 500 , 500 )
-			material = new THREE.MeshBasicMaterial
-				color: 0xF9FDFF
-			@.landscape = new THREE.Mesh geometry , material
-			site.stage.scene.add @.landscape
-			@.landscape.rotation.x = -90 * ( Math.PI / 180 )
-			@.landscape.position.y = -90
-
-			# shadows
-			@.landscape.castShadow = true
-			@.landscape.receiveShadow = true
-
 		ready: ( mesh , name ) =>
 			@[name] = mesh
 

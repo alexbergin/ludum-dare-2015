@@ -19,7 +19,7 @@ define [
 		friction: 0.98
 
 		# added to the y axis each loop
-		gravity: 0.2
+		gravity: 0.1
 
 		# values that get added per loop
 		velocity:

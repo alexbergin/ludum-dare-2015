@@ -4,6 +4,7 @@ define [
 	"site/modules/game/camera"
 	"site/modules/game/input"
 	"site/modules/game/light"
+	"site/modules/game/collision"
 	"site/modules/game/extends/landscape"
 	"site/modules/game/extends/player"
 	"site/modules/game/extends/fan"
@@ -14,6 +15,7 @@ define [
 	Camera
 	Input
 	Light
+	Collision
 	Landscape
 	Player
 	Fan
@@ -29,6 +31,7 @@ define [
 		setupTasks: [
 			"light"
 			"camera"
+			"collision"
 			"landscape"
 			"player"
 			"input"
@@ -39,6 +42,7 @@ define [
 		loopTasks: [
 			"fan"
 			"player"
+			"collision"
 		]
 
 		# scale the canvas based on touch ability i guess
@@ -46,6 +50,7 @@ define [
 
 		# game modules
 		camera: new Camera
+		collision: new Collision
 		light: new Light
 		landscape: new Landscape
 		input: new Input
@@ -79,7 +84,7 @@ define [
 			@.renderer = new THREE.WebGLRenderer
 
 			# scene preferences
-			@.scene.fog = new THREE.Fog 0xCDE6F2 , 0 , 7500
+			@.scene.fog = new THREE.Fog 0xCDE6F2 , 1200 , 7500
 
 			# set renderer preferences
 			@.renderer.setClearColor 0xCDE6F2

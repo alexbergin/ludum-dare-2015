@@ -13,7 +13,7 @@ define ->
 			@.landscape = new THREE.Mesh geometry , material
 			site.stage.scene.add @.landscape
 			@.landscape.rotation.x = -90 * ( Math.PI / 180 )
-			@.landscape.position.y = -90
+			@.landscape.position.y = 0
 
 			# shadows
 			@.landscape.castShadow = true

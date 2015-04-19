@@ -34,14 +34,18 @@ define ->
 
 		loop: =>
 
+			# vertices the camera can move on
 			vertices = [ "x" , "y" , "z" ]
 
 			for vertex in vertices
 
+				# find how far the camera is from its goal
 				diff = @.alpha.position[ vertex ] - @.position[ vertex ]
 				
+				# ease to its new position
 				if Math.abs( diff ) > 0.00001
 					@.alpha.position[ vertex ] -= diff * 0.1
 
+				# don't kill the memory
 				else
 					@.alpha.position[ vertex ] = @.position[ vertex ]

@@ -37,8 +37,18 @@ define [
 
 		make: ( props ) =>
 
+			self = @
 			pos = props.position
 			rot = props.rotation
+
+			collision =
+				onCollision: self.onCollisionBase
+				x1: pos.x - 90
+				x2: pos.x + 90
+				y1: pos.y + pos.y
+				y2: pos.y + pos.y + 90
+				z1: pos.z - 90
+				z2: pos.z + 90
 
 			@.build(
 				src: "models/json/fan/base.js",
@@ -47,9 +57,19 @@ define [
 					x: 60 , y: 60 , z: 60
 				position:
 					x: pos.x , y: pos.y , z: pos.z
+				collision: collision
 				callback: ( mesh ) =>
 					@.ready( mesh , "base" )
 			)
+
+			collision =
+				onCollision: self.onCollisionBlades
+				x1: pos.x - 90
+				x2: pos.x + 90
+				y1: pos.y + 75
+				y2: pos.y + 600
+				z1: pos.z - 90
+				z2: pos.z + 90
 
 			@.build(
 				src: "models/json/fan/blades.js",
@@ -60,7 +80,7 @@ define [
 					x: pos.x , y: pos.y + 75 , z: pos.z
 				rotation:
 					x: 0 , y: 360 * Math.random() , z: 0
-
+				collision: collision
 				callback: ( mesh ) =>
 					@.ready( mesh , "blades" )
 			)
@@ -76,3 +96,9 @@ define [
 				base = @.base[ i ]
 				blade.rotation.y += 0.08
 				i++
+
+		onCollisionBlades: ( object ) ->
+			console.log "fan is pushing"
+
+		onCollisionBase: ( object ) ->
+			console.log "balloon is popping"

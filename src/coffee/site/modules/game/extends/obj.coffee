@@ -50,6 +50,14 @@ define ->
 				site.stage.scene.add mesh
 				props.callback?( mesh )
 
+				# check collision property
+				if props.collision isnt undefined
+
+					# add collision prop to the mesh
+					# and append to the collision array
+					mesh.collision = props.collision
+					site.stage.collision.add mesh
+
 		checkProps: ( props ) ->
 
 			# the properties we're checking for

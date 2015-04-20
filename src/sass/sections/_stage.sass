@@ -11,10 +11,34 @@
 	canvas
 		@include transform-origin( top , left )
 		@include scale( 1 )
+		z-index: 1
 		background-color: #F4FCFF
 		position: absolute
 		left: 0
 		top: 0
+
+	.score
+		@include translate( -50% , -50% )
+		position: absolute
+		font-family: monospace
+		letter-spacing: 0.05em
+		text-transform: uppercase
+		text-align: center
+		display: none
+		z-index: 2
+		color: #D65555
+		left: 50%
+		top: 50%
+
+		h1
+			font-size: 15vh
+
+		h2
+			font-size: 5vh
+
+		&.visible
+			display: block
+
 
 .is-touch #stage
 	

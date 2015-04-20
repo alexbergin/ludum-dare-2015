@@ -15,29 +15,16 @@ define [
 
 		init: ->
 
-			vertices = [ "x" , "y" , "z" ]
+		
+			@.make
+				direction: -1
+				vertical: "y"
 
-			x = -1500
-			while x < 1500
+				position:
+					x: 0 , y: 890 , z: 0
 
-				y = -1500
-				while y < 1500
-
-					if Math.random() > 0.5 then direction = 1 else direction = -1
-					vertical = vertices[ Math.floor( Math.random() * vertices.length )]
-					@.make
-						direction: direction
-						vertical: vertical
-
-						position:
-							x: x , y: Math.random() * 1000 , z: y
-
-						rotation:
-							x: 0 , y: 0 , z: 0
-
-					y += 600
-
-				x += 600
+				rotation:
+					x: 0 , y: 0 , z: 0
 
 		make: ( props ) =>
 
@@ -190,12 +177,13 @@ define [
 			# get the strength we apply everything with
 			strength = 1 - ( Math.max( Math.min( diffVert / 512 , 1 ) , 0 ))
 
-			if diffVert < 5 and site.stage.player.isDead is false then site.stage.player.die()
-
+			if Math.abs( diffVert ) < 90 and site.stage.player.isDead is false then site.stage.player.die()
+			
 			# apply lateral movement
-			if vertical isnt "x" then player.velocity.x += ( diffX * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
-			if vertical isnt "y" then player.velocity.y += ( diffY * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
-			if vertical isnt "z" then player.velocity.z += ( diffZ * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
+			# if site.stage.player.isDead is false
+			# 	if vertical isnt "x" then player.velocity.x += ( diffX * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
+			# 	if vertical isnt "y" then player.velocity.y += ( diffY * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
+			# 	if vertical isnt "z" then player.velocity.z += ( diffZ * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
 
 			# # not as much bouncing, please
 			# if vertical isnt "x" then player.velocity.x *= 1 - ( strength / 9 )

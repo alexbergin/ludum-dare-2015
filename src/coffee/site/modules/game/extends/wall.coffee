@@ -14,16 +14,95 @@ define ->
 
 		init: ->
 
-			x = 0
-			while x < 1800
+			width = 1800
+			height = 900
+			x = -width / 2
+			while x < width / 2
 
 				y = 150
-				while y < 1050
+				while y < 150 + height
 					wall =
 						vertical: "x"
 						direction: 1
 						position: 
-							x: x , y: y , z: 300
+							x: x + 150 , y: y , z: -width / 2
+						height: 300
+						width: 300
+
+					@.build wall
+
+					y += 300
+
+				x += 300
+
+			x = -width / 2
+			while x < width / 2
+
+				y = 150
+				while y < 150 + height
+					wall =
+						vertical: "x"
+						direction: -1
+						position: 
+							x: x + 150 , y: y , z: width / 2
+						height: 300
+						width: 300
+
+					@.build wall
+
+					y += 300
+
+				x += 300
+
+			x = -width / 2
+			while x < width / 2
+
+				y = 150
+				while y < 150 + height
+					wall =
+						vertical: "z"
+						direction: 1
+						position: 
+							z: x + 150 , y: y , x: -width / 2
+						height: 300
+						width: 300
+
+					@.build wall
+
+					y += 300
+
+				x += 300
+
+			x = -width / 2
+			while x < width / 2
+
+				y = 150
+				while y < 150 + height
+					wall =
+						vertical: "z"
+						direction: -1
+						position: 
+							z: x + 150 , y: y , x: width / 2
+						height: 300
+						width: 300
+
+					@.build wall
+
+					y += 300
+
+				x += 300
+
+			x = -width / 2
+			while x < width / 2
+
+				y = -width / 2
+				while y < width / 2
+
+					wall =
+						vertical: "y"
+						direction: -1
+						position: 
+							x: x + 150 , y: height , z: y + 150
 						height: 300
 						width: 300
 
@@ -71,7 +150,7 @@ define ->
 						section.rotation.x = Math.radians( -90 )
 
 				when "z"
-					if props.direction < 0
+					if props.direction > 0
 						section.rotation.y = Math.radians( 90 )
 					else
 						section.rotation.y = Math.radians( -90 )
@@ -118,8 +197,8 @@ define ->
 			site.stage.collision.add section
 
 			# apply shadows
-			section.castShadow = true
-			section.receiveShadow = true
+			section.castShadow = false
+			section.receiveShadow = false
 
 			# add it to the scene
 			site.stage.scene.add section

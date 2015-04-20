@@ -38,6 +38,8 @@ define [
 
 		init: ->
 
+			@.born = new Date().getTime() / 1000
+
 			# make the balloon and add to scene
 			@.build(
 				src: "models/json/balloon.js",
@@ -135,13 +137,25 @@ define [
 		die: =>
 			@.isDead = true
 
+			seconds = new Date().getTime() / 1000
+			seconds = seconds - @.born
+			seconds = Math.round seconds
+
+			document.getElementsByClassName("score")[0].innerHTML = "
+				<h2>you lived for</h2>
+				<h1>#{seconds}</h1>
+				<h2>seconds</h2>
+			"
+			document.getElementsByClassName("score")[0].classList.add "visible"
 			clearTimeout @.deathTimer
 			@.deathTimer = setTimeout =>
 
 				@.isDead = false
-				@.balloon.position.x = 0
-				@.balloon.position.y = 1000
-				@.balloon.position.z = 0
+				@.born = new Date().getTime()
+				document.getElementsByClassName("score")[0].classList.remove "visible"
+				@.balloon.position.x = 800
+				@.balloon.position.y = 600
+				@.balloon.position.z = 800
 
 			, 3000
 

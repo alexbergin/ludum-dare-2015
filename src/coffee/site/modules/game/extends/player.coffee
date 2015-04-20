@@ -128,7 +128,7 @@ define [
 			# position the camera
 			camera.position.x = x + ( Math.sin( Math.radians( @.angle )) * @.distance )
 			camera.position.z = z + ( Math.cos( Math.radians( @.angle )) * @.distance )
-			camera.position.y = y + ( @.distance * 0.5 )
+			camera.position.y = 450 + (( y - 450 ) / 4 )
 
 			# look at the balloon
 			camera.alpha.lookAt x: x , y: y , z: z
@@ -151,7 +151,7 @@ define [
 			@.deathTimer = setTimeout =>
 
 				@.isDead = false
-				@.born = new Date().getTime()
+				@.born = new Date().getTime() / 1000
 				document.getElementsByClassName("score")[0].classList.remove "visible"
 				@.balloon.position.x = 800
 				@.balloon.position.y = 600

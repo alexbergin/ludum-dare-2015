@@ -3,7 +3,7 @@ define ->
 	class Collision
 
 		# multiply initial velocity by this
-		rebound: 1
+		rebound: 1.1
 
 		# objects we're testing
 		objects: []
@@ -71,3 +71,4 @@ define ->
 
 		collide: ( axis , direction ) ->
 			@.player.velocity[ axis ] = direction * Math.abs( @.player.velocity[ axis ]) * @.rebound
+			@.player.balloon.position[ axis ] += @.player.velocity[ axis ]

@@ -3,59 +3,40 @@ define ->
 	class Wall
 
 		colors: [
-			0xF2F5F7
-			0xEAEEEF
-			0xEDF0F2
-			0xE8EBED
+			0xEDFAFF
+			0xEAF8FC
+			0xDEEBEF
+			0xD5E1E5
+			0xDAE6EA
 		]
 
 		sections: []
 
 		init: ->
 
-			surfaces = [
-				vertical: "x"
-				direction: 1
-				position:
-					x: 150 , y: 300 , z: 150
-			,
-				vertical: "x"
-				direction: -1
-				position:
-					x: -150 , y: 300 , z: -150
-			,
-				vertical: "y"
-				direction: 1
-				position:
-					x: 0 , y: 450 , z: 0
-			,
-				vertical: "y"
-				direction: -1
-				position:
-					x: 0 , y: 150 , z: 0
-			,
-				vertical: "z"
-				direction: 1
-				position:
-					x: 150 , y: 300 , z: 150
-			,
-				vertical: "z"
-				direction: -1
-				position:
-					x: -150 , y: 300 , z: -150
-			]
+			x = 0
+			while x < 1800
 
-			for surface in surfaces
-				wall =
-					vertical: surface.vertical
-					direction: surface.direction
-					position: surface.position
-					height: 300
-					width: 300
+				y = 150
+				while y < 1050
+					wall =
+						vertical: "x"
+						direction: 1
+						position: 
+							x: x , y: y , z: 300
+						height: 300
+						width: 300
 
-				@.build wall
+					@.build wall
 
-		build: ( props ) ->
+					y += 300
+
+				x += 300
+
+		build: ( props ) =>
+
+			# whoops more garbage
+			self = @
 
 			# make the wall
 			geometry = new THREE.PlaneBufferGeometry( props.width , props.height , 10 , 10 )
@@ -66,8 +47,9 @@ define ->
 			section = new THREE.Mesh geometry , material
 			@.sections.push section
 
-			# add it to the scene
-			site.stage.scene.add section
+			# add face info
+			section.vertical = props.vertical
+			section.direction = props.direction
 
 			# position the mesh
 			verticies = [ "x" , "y" , "z" ]
@@ -94,8 +76,62 @@ define ->
 					else
 						section.rotation.y = Math.radians( -90 )
 
+			# build the collision box
+			x1 = section.position.x
+			x2 = section.position.x
+			y1 = section.position.y
+			y2 = section.position.y
+			z1 = section.position.z
+			z2 = section.position.z
+
+
+			switch props.vertical
+				when "x"
+					y1 -= props.height / 2
+					y2 += props.height / 2
+					x1 -= props.width / 2
+					x2 += props.width / 2
+
+				when "y"
+					z1 -= props.height / 2
+					z2 += props.height / 2
+					x1 -= props.width / 2
+					x2 += props.width / 2
+
+				when "z"
+					y1 -= props.height / 2
+					y2 += props.height / 2
+					z1 -= props.width / 2
+					z2 += props.width / 2
+
+			collision =
+				onCollision: self.onCollision
+				x1: x1
+				x2: x2
+				y1: y1
+				y2: y2
+				z1: z1
+				z2: z2
+
+			# apply the collision
+			section.collision = collision
+			site.stage.collision.add section
+
 			# apply shadows
 			section.castShadow = true
 			section.receiveShadow = true
 
+			# add it to the scene
+			site.stage.scene.add section
 
+		onCollision: ( object ) ->
+		
+			player = site.stage.player
+			direction = object.direction
+			switch object.vertical
+				when "x" then axis = "z"
+				when "y" then axis = "y"
+				when "z" then axis = "x"
+
+			player.velocity[ axis ] = direction * Math.abs( player.velocity[ axis ]) * 1.1
+			player.balloon.position[ axis ] += player.velocity[ axis ]

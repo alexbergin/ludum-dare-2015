@@ -6,6 +6,7 @@ define [
 	"site/modules/game/light"
 	"site/modules/game/collision"
 	"site/modules/game/extends/landscape"
+	"site/modules/game/extends/spikes"
 	"site/modules/game/extends/player"
 	"site/modules/game/extends/wall"
 	"site/modules/game/extends/fan"
@@ -18,6 +19,7 @@ define [
 	Light
 	Collision
 	Landscape
+	Spikes
 	Player
 	Wall
 	Fan
@@ -36,6 +38,7 @@ define [
 			"collision"
 			"landscape"
 			"player"
+			"spikes"
 			"input"
 			"wall"
 			"fan"
@@ -60,6 +63,7 @@ define [
 		input: new Input
 		fan: new Fan
 		player: new Player
+		spikes: new Spikes
 		wall: new Wall
 
 		init: ->

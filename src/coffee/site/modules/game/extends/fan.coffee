@@ -190,6 +190,8 @@ define [
 			# get the strength we apply everything with
 			strength = 1 - ( Math.max( Math.min( diffVert / 512 , 1 ) , 0 ))
 
+			if diffVert < 5 and site.stage.player.isDead is false then site.stage.player.die()
+
 			# apply lateral movement
 			if vertical isnt "x" then player.velocity.x += ( diffX * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
 			if vertical isnt "y" then player.velocity.y += ( diffY * 0.015 + (( Math.random() - 0.5 ) * 0.1 )) * strength
@@ -201,6 +203,7 @@ define [
 			# if vertical isnt "z" then player.velocity.z *= 1 - ( strength / 9 )
 
 			# apply vertical movement
-			if vertical is "x" then player.velocity.x += direction * 1.0 * strength
-			if vertical is "y" then player.velocity.y += direction * 1.0 * strength
-			if vertical is "z" then player.velocity.z += direction * 1.0 * strength
+			if site.stage.player.isDead is false
+				if vertical is "x" then player.velocity.x += direction * 1.0 * strength
+				if vertical is "y" then player.velocity.y += direction * 1.0 * strength
+				if vertical is "z" then player.velocity.z += direction * 1.0 * strength

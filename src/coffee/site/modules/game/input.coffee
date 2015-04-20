@@ -137,9 +137,10 @@ define ->
 			yVel = y
 
 			# apply the input to the balloon
-			balloon.x += xVel
-			balloon.y += yVel
-			balloon.z += zVel
+			if site.stage.player.isDead is false
+				balloon.x += xVel
+				balloon.y += yVel
+				balloon.z += zVel
 
 			# reset the delta
 			@.startX = @.x

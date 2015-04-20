@@ -33,6 +33,9 @@ define [
 			y: 0
 			z: 0
 
+		# death state, duh
+		isDead: false
+
 		init: ->
 
 			# make the balloon and add to scene
@@ -64,11 +67,11 @@ define [
 				# move the mesh
 				@.updatePosition()
 
-				# see what we're colliding with
-				@.detectCollision()
-
 				# move the camera to its new position
 				@.updateCamera()
+
+				# update the mesh
+				@.updateMesh()
 
 		updateVelocity: ->
 
@@ -86,7 +89,15 @@ define [
 					@.velocity[ vertex ] = 0
 
 			# apply gravity
-			@.velocity.y += @.gravity
+			if site.stage.player.isDead is false
+				@.velocity.y += 0.1
+
+			else
+				@.velocity.y -= 1.5
+				if @.velocity.y > 0 then @.velocity.y = 0
+				if @.balloon.position.y < 2
+					@.velocity.y = 0
+					@.balloon.position.y = 1
 
 		updatePosition: ->
 
@@ -96,9 +107,6 @@ define [
 			# update position + rotate
 			for vertex in vertices
 				@.balloon.position[ vertex ] += @.velocity[ vertex ]
-
-
-		detectCollision: ->
 
 		updateCamera: ->
 
@@ -123,3 +131,32 @@ define [
 			# look at the balloon
 			camera.alpha.lookAt x: x , y: y , z: z
 			light.lookAt x: x , y: y , z: z
+
+		die: =>
+			@.isDead = true
+
+			clearTimeout @.deathTimer
+			@.deathTimer = setTimeout =>
+
+				@.isDead = false
+				@.balloon.position.x = 0
+				@.balloon.position.y = 1000
+				@.balloon.position.z = 0
+
+			, 3000
+
+
+		updateMesh: ->
+
+			vertices = [ "x" , "y" , "z" ]
+
+			# scale the balloon in case of death
+			if @.isDead
+
+				for vertex in vertices
+					@.balloon.scale[ vertex ] = 0
+
+			else
+
+				for vertex in vertices
+					@.balloon.scale[ vertex ] = 30

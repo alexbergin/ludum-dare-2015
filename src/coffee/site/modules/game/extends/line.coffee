@@ -63,15 +63,19 @@ define ->
 
 				# move if needed
 				if @.distance( past.position , point.position ) > @.minDist
-					for vertex in vertices
+					mult = 0.2
+				else
+					mult = 0
 
-						diff = point.position[ vertex ] - past.position[ vertex ]
+				for vertex in vertices
 
-						if Math.abs( diff ) > 0.00001
-							point.velocity[ vertex ] -= diff * 0.2
+					diff = point.position[ vertex ] - past.position[ vertex ]
 
-						else
-							point.position[ vertex ] = past.position[ vertex ]
+					if Math.abs( diff ) > 0.00001
+						point.velocity[ vertex ] -= diff * mult
+
+					else
+						point.position[ vertex ] = past.position[ vertex ]
 
 				# apply positioning and friction
 				for vertex in vertices

@@ -7,6 +7,7 @@ define [
 	"site/modules/game/collision"
 	"site/modules/game/extends/landscape"
 	"site/modules/game/extends/spikes"
+	"site/modules/game/extends/line"
 	"site/modules/game/extends/player"
 	"site/modules/game/extends/wall"
 	"site/modules/game/extends/fan"
@@ -20,6 +21,7 @@ define [
 	Collision
 	Landscape
 	Spikes
+	Line
 	Player
 	Wall
 	Fan
@@ -38,6 +40,7 @@ define [
 			"collision"
 			"landscape"
 			"player"
+			"line"
 			"spikes"
 			"input"
 			"wall"
@@ -48,6 +51,7 @@ define [
 		loopTasks: [
 			"fan"
 			"player"
+			"line"
 			"collision"
 			"camera"
 		]
@@ -63,6 +67,7 @@ define [
 		input: new Input
 		fan: new Fan
 		player: new Player
+		line: new Line
 		spikes: new Spikes
 		wall: new Wall
 

@@ -8,6 +8,8 @@ If you've already setup `Node`, `Compass`, `Grunt` and `Bower` from a previous p
 
 ## Notes
 
+View the tag `ludum-dare-release` to see the version that was delivered for Ludum Dare.
+
 The source files that compile into html/css/js can be found in `src`.
 
 - `src/coffee` -> `app/scripts`

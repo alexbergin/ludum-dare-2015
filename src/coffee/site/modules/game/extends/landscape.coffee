@@ -11,6 +11,8 @@ define ->
 
 		init: ->
 
+			# array to position walls based on
+			# defined width and height
 			pos = [
 					x: -@.width / 2,
 					s: @.height

@@ -19,12 +19,10 @@ define [
 		friction: 0.98
 
 		# added to the y axis each loop
-		gravity: 0.1
+		gravity: 0.15
 
 		# makes things appear a little windy
 		simAngle: 0
-		simMaxForce: 1
-		simMinForce: 0.2
 
 		# values that get added per loop
 		velocity:
@@ -85,6 +83,15 @@ define [
 			# properties of velocity
 			vertices = [ "x" , "y" , "z" ]
 
+			# make up simulated wind force
+			@.simAngle += 0.2 * Math.random()
+			force = ( @.velocity.x + @.velocity.y + @.velocity.z ) / 3
+			force = force * Math.random() * 0.075
+
+			# add that to the x & z
+			@.velocity.x += Math.sin( @.simAngle ) * force
+			@.velocity.z += Math.cos( @.simAngle ) * force
+
 			# apply friction
 			for vertex in vertices
 
@@ -97,10 +104,10 @@ define [
 
 			# apply gravity
 			if site.stage.player.isDead is false
-				@.velocity.y += 0.1
+				@.velocity.y += @.gravity
 
 			else
-				@.velocity.y -= 1.5
+				@.velocity.y -= @.gravity * 10
 				if @.velocity.y > 0 then @.velocity.y = 0
 				if @.balloon.position.y < 2
 					@.velocity.y = 0

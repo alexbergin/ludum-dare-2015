@@ -124,23 +124,25 @@ define ->
 		updateBalloon: ->
 
 			# get the balloon's velocity, rotation, & viewing angle
-			balloon = site.stage.player.velocity
+			velocity = site.stage.player.velocity
 			angle = site.stage.player.angle
 
 			# get our deltas
-			x = -( @.startX - @.x ) * 0.015
-			y = -( @.startY - @.y ) * 0.035
+			x = ( @.startX - @.x ) * 0.02
+			y = ( @.startY - @.y ) * 0.02
 
-			# set our input velocity
+			# set our left & right input velocity
 			xVel = Math.sin( Math.radians( angle - 90 )) * x
 			zVel = Math.cos( Math.radians( angle - 90 )) * x
-			yVel = y
 
-			# apply the input to the balloon
+			# add our forward and backwards velocity
+			xVel += Math.sin( Math.radians( angle )) * y
+			zVel += Math.cos( Math.radians( angle )) * y
+
+			# apply the input to the balloon velocity
 			if site.stage.player.isDead is false
-				balloon.x += xVel
-				balloon.y += yVel
-				balloon.z += zVel
+				velocity.x += xVel
+				velocity.z += zVel
 
 			# reset the delta
 			@.startX = @.x

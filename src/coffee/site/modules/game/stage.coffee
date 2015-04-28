@@ -130,11 +130,21 @@ define [
 			@.renderer.setSize @.width , @.height
 
 		onTouchStart: =>
+
+			# apply styles specific for touch devices
 			document.body.classList.add "is-touch"
+
+			# no shadows
 			@.renderer.shadowMapEnabled = false
-			@.camera.alpha.far = 5000
 			@.light.spot.castShadow = false
+
+			# make the camera distance lower
+			@.camera.alpha.far = 5000
+
+			# save the state for later
 			@.isTouch = true
+
+			# apply a resize
 			@.onResize()
 
 		render: =>

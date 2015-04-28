@@ -11,7 +11,7 @@ define [
 	class Player extends Obj
 
 		# what distance + angle to hold the camera at
-		distance: 250
+		distance: 600
 		angle: 0
 
 		# what velocity values get multiplied
@@ -23,6 +23,7 @@ define [
 
 		# makes things appear a little windy
 		simAngle: 0
+		simMult: 0.1
 
 		# values that get added per loop
 		velocity:
@@ -86,7 +87,7 @@ define [
 			# make up simulated wind force
 			@.simAngle += 0.2 * Math.random()
 			force = ( @.velocity.x + @.velocity.y + @.velocity.z ) / 3
-			force = force * Math.random() * 0.075
+			force = force * Math.random() * @.simMult
 
 			# add that to the x & z
 			@.velocity.x += Math.sin( @.simAngle ) * force

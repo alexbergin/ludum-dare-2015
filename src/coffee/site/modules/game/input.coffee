@@ -19,35 +19,56 @@ define ->
 			# listen for a distance change
 			window.addEventListener "mousewheel" , @.onMouseWheel
 
+			# listen for touch input
+			window.addEventListener "touchstart" , @.onTouchStart
+			window.addEventListener "touchmove" , @.onTouchMove
+			window.addEventListener "touchend" , @.onTouchEnd
+
 			# listen for left or right mouse buttons to be pressed
 			window.addEventListener "mousedown" , @.onMouseDown
-			window.addEventListener "mouseup" , @.onMouseUp
-
-			# listen for movement of the mouse
 			window.addEventListener "mousemove" , @.onMouseMove
+			window.addEventListener "mouseup" , @.onMouseUp
 
 			# hack to allow us to use the right mouse button
 			document.oncontextmenu = document.body.oncontextmenu = -> return false
 
 		onMouseWheel: ( e ) ->
 
-			# get how much to change the distance
-			delta = e.wheelDelta * 0.2
+			# do nothing if touch
+			if site.stage.isTouch is false
 
-			# apply the delta to the current position
-			distance = site.stage.player.distance - delta
+				# get how much to change the distance
+				delta = e.wheelDelta * 0.2
 
-			# bound it between a minimum and maximum
-			distance = Math.min( 600 , Math.max( 120 , distance ))
+				# apply the delta to the current position
+				distance = site.stage.player.distance - delta
 
-			# apply to the camera
-			site.stage.player.distance = distance
+				# bound it between a minimum and maximum
+				distance = Math.min( 600 , Math.max( 120 , distance ))
+
+				# apply to the camera
+				site.stage.player.distance = distance
 
 		onMouseMove: ( e ) =>
 
+			# do nothing if touch
+			if site.stage.isTouch is false
+
+				# get the current mouse position
+				@.x = e.clientX
+				@.y = e.clientY
+
+				# position the camera
+				if @.rightDown is true then @.updateCamera()
+
+				# move the balloon
+				if @.leftDown is true then @.updateBalloon()
+
+		onTouchMove: ( e ) =>
+
 			# get the current mouse position
-			@.x = e.clientX
-			@.y = e.clientY
+			@.x = e.touches[0].clientX
+			@.y = e.touches[0].clientY
 
 			# position the camera
 			if @.rightDown is true then @.updateCamera()
@@ -58,27 +79,59 @@ define ->
 
 		onMouseDown: ( e ) =>
 
-			# stop default
-			e.preventDefault()
-			
-			# detect which button was clicked
-			switch e.which
+			# do nothing if touch
+			if site.stage.isTouch is false
 
-				# call the right one
+				# stop default
+				e.preventDefault()
+				
+				# detect which button was clicked
+				switch e.which
+
+					# call the right one
+					when 1 then @.onLeftDown()
+					when 3 then @.onRightDown()
+
+		onTouchStart: ( e ) =>
+			
+			# stop any default
+			e.preventDefault()
+
+			# store the inital touch position
+			@.x = e.touches[0].clientX
+			@.y = e.touches[0].clientY
+
+			# detect number of touches
+			switch e.touches.length
 				when 1 then @.onLeftDown()
-				when 3 then @.onRightDown()
+				when 2 then @.onRightDown()
 
 		onMouseUp: ( e ) =>
 
+			# do nothing if touch
+			if site.stage.isTouch is false
+
+				# stop default
+				e.preventDefault()
+				
+				# detect which button was clicked
+				switch e.which
+
+					# call the right one
+					when 1 then @.onLeftUp()
+					when 3 then @.onRightUp()
+
+		onTouchEnd: ( e ) =>
+
 			# stop default
 			e.preventDefault()
-			
-			# detect which button was clicked
-			switch e.which
 
-				# call the right one
-				when 1 then @.onLeftUp()
-				when 3 then @.onRightUp()
+			# make sure all touches are done
+			if e.touches.length is 0
+
+				# release camera and balloon
+				@.onLeftUp()
+				@.onRightUp()
 
 		onLeftUp: ->
 

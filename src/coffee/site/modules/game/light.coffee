@@ -4,7 +4,7 @@ define ->
 	class Light
 
 		# light options
-		cast: true
+		cast: false
 		color: 0xffffff
 		onlyShadow: true
 		shadowDarkness: 0.05

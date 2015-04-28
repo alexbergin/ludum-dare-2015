@@ -22,6 +22,7 @@ define ->
 
 			# listen for a click on the start button
 			@.start.addEventListener "click" , @.onStart
+			@.start.addEventListener "touchstart" , @.onStart
 
 		onStart: ->
 

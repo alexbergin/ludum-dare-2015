@@ -3,8 +3,8 @@ define ->
 	class Line
 
 		points: []
-		count: 12
-		minDist: 20
+		count: 6
+		minDist: 0
 
 		init: ->
 			@.makeString()

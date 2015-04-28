@@ -21,6 +21,11 @@ define [
 		# added to the y axis each loop
 		gravity: 0.1
 
+		# makes things appear a little windy
+		simAngle: 0
+		simMaxForce: 1
+		simMinForce: 0.2
+
 		# values that get added per loop
 		velocity:
 			x: 0

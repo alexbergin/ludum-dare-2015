@@ -16,15 +16,15 @@ define [
 		init: ->
 
 		
-			@.make
-				direction: -1
-				vertical: "y"
+			# @.make
+			# 	direction: -1
+			# 	vertical: "y"
 
-				position:
-					x: 0 , y: 890 , z: 0
+			# 	position:
+			# 		x: 0 , y: 890 , z: 0
 
-				rotation:
-					x: 0 , y: 0 , z: 0
+			# 	rotation:
+			# 		x: 0 , y: 0 , z: 0
 
 		make: ( props ) =>
 

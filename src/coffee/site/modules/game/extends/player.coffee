@@ -128,7 +128,7 @@ define [
 			# position the camera
 			camera.position.x = x + ( Math.sin( Math.radians( @.angle )) * @.distance )
 			camera.position.z = z + ( Math.cos( Math.radians( @.angle )) * @.distance )
-			camera.position.y = 450 + (( y - 450 ) / 4 )
+			camera.position.y = y - ( Math.min( Math.max( @.velocity.y * 60 , -@.distance / 2 ) , @.distance / 2 ))
 
 			# look at the balloon
 			camera.alpha.lookAt x: x , y: y , z: z

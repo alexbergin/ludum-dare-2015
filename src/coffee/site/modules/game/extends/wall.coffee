@@ -3,114 +3,13 @@ define ->
 	class Wall
 
 		colors: [
-			0xEDFAFF
-			0xEAF8FC
-			0xDEEBEF
-			0xD5E1E5
-			0xDAE6EA
+			0xEFF3F4
+			0xE8EDEF
 		]
 
 		sections: []
 
 		init: ->
-
-			width = 1800
-			height = 900
-			x = -width / 2
-			while x < width / 2
-
-				y = 150
-				while y < 150 + height
-					wall =
-						vertical: "x"
-						direction: 1
-						position: 
-							x: x + 150 , y: y , z: -width / 2
-						height: 300
-						width: 300
-
-					@.build wall
-
-					y += 300
-
-				x += 300
-
-			x = -width / 2
-			while x < width / 2
-
-				y = 150
-				while y < 150 + height
-					wall =
-						vertical: "x"
-						direction: -1
-						position: 
-							x: x + 150 , y: y , z: width / 2
-						height: 300
-						width: 300
-
-					@.build wall
-
-					y += 300
-
-				x += 300
-
-			x = -width / 2
-			while x < width / 2
-
-				y = 150
-				while y < 150 + height
-					wall =
-						vertical: "z"
-						direction: 1
-						position: 
-							z: x + 150 , y: y , x: -width / 2
-						height: 300
-						width: 300
-
-					@.build wall
-
-					y += 300
-
-				x += 300
-
-			x = -width / 2
-			while x < width / 2
-
-				y = 150
-				while y < 150 + height
-					wall =
-						vertical: "z"
-						direction: -1
-						position: 
-							z: x + 150 , y: y , x: width / 2
-						height: 300
-						width: 300
-
-					@.build wall
-
-					y += 300
-
-				x += 300
-
-			x = -width / 2
-			while x < width / 2
-
-				y = -width / 2
-				while y < width / 2
-
-					wall =
-						vertical: "y"
-						direction: -1
-						position: 
-							x: x + 150 , y: height , z: y + 150
-						height: 300
-						width: 300
-
-					@.build wall
-
-					y += 300
-
-				x += 300
 
 		build: ( props ) =>
 

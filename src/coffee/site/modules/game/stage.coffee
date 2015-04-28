@@ -97,8 +97,12 @@ define [
 			@.scene = new THREE.Scene()
 			@.renderer = new THREE.WebGLRenderer
 
+			# get the landscape scale
+			scale = ( site.stage.landscape.width + site.stage.landscape.height ) / 2
+			mult = ( scale / 1200  )
+
 			# scene preferences
-			@.scene.fog = new THREE.Fog 0xCDE6F2 , 1200 , 7500
+			@.scene.fog = new THREE.Fog 0xCDE6F2 , 750 *  mult , 1750 * mult
 
 			# set renderer preferences
 			@.renderer.setClearColor 0xCDE6F2

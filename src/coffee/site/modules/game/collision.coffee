@@ -65,10 +65,6 @@ define ->
 			if @.player.balloon.position.y <= 0
 				@.collide "y" , 1
 
-			# glass ceiling
-			if @.player.balloon.position.y >= 2000
-				@.collide "y" , -1
-
 		collide: ( axis , direction ) ->
 			@.player.velocity[ axis ] = direction * Math.abs( @.player.velocity[ axis ]) * @.rebound
 			@.player.balloon.position[ axis ] += @.player.velocity[ axis ]

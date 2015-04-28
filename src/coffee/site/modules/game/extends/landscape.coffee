@@ -18,21 +18,25 @@ define ->
 					s: @.height
 					z: 0
 					r: Math.radians( 90 )
+					c: 0xF9FDFF
 				,
 					x: @.width / 2
 					s: @.height
 					z: 0
 					r: Math.radians( 270 )
+					c: 0xF9FDFF
 				,
 					x: 0
 					s: @.width
 					z: -@.height / 2
 					r: Math.radians( 0 )
+					c: 0xF7FAFC
 				,
 					x: 0
 					s: @.width
 					z: @.height / 2
 					r: Math.radians( 180 )
+					c: 0xF7FAFC
 			]
 
 			# temp wall
@@ -44,7 +48,7 @@ define ->
 				# define material
 				geometry = new THREE.PlaneBufferGeometry(  placement.s , max * 5 , 1 , 1 )
 				material = new THREE.MeshBasicMaterial
-					color: 0xF9FDFF
+					color: placement.c
 
 				# make a new mesh
 				landscape = new THREE.Mesh geometry , material

@@ -23,7 +23,13 @@ define [
 
 		# makes things appear a little windy
 		simAngle: 0
-		simMult: 0.1
+		simMult: 0.01
+
+		# camera looks at this vector
+		look:
+			x: 0
+			y: 0
+			z: 0
 
 		# values that get added per loop
 		velocity:
@@ -85,9 +91,8 @@ define [
 			vertices = [ "x" , "y" , "z" ]
 
 			# make up simulated wind force
-			@.simAngle += 0.2 * Math.random()
-			force = ( @.velocity.x + @.velocity.y + @.velocity.z ) / 3
-			force = force * Math.random() * @.simMult
+			@.simAngle += 0.1
+			force = @.velocity.y * @.simMult
 
 			# add that to the x & z
 			@.velocity.x += Math.sin( @.simAngle ) * force
@@ -135,7 +140,7 @@ define [
 			z = @.balloon.position.z
 
 			# update light position
-			light.position.set( x , y + 1000 , z )
+			light.position.set( x , y - 1000 , z )
 			light.target = @.balloon
 
 			# get camera bounds
@@ -151,10 +156,15 @@ define [
 			# position the camera
 			camera.position.x = Math.min( Math.max( x + ( Math.sin( Math.radians( @.angle )) * @.distance ) , minX ) , maxX )
 			camera.position.z = Math.min( Math.max( z + ( Math.cos( Math.radians( @.angle )) * @.distance ) , minZ ) , maxZ )
-			camera.position.y = y - ( Math.min( Math.max( @.velocity.y * 60 , -@.distance / 2 ) , @.distance / 2 ))
+			camera.position.y = y
+
+			# update the look coordinate
+			@.look.x = @.balloon.position.x
+			@.look.y = @.balloon.position.y
+			@.look.z = @.balloon.position.z
 
 			# look at the balloon
-			camera.alpha.lookAt x: x , y: y , z: z
+			camera.alpha.lookAt x: @.look.x , y: @.look.y , z: @.look.z
 			light.lookAt x: x , y: y , z: z
 
 		die: =>

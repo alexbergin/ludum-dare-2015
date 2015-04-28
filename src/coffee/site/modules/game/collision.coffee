@@ -35,7 +35,7 @@ define ->
 
 			# balloon position
 			x = @.player.balloon.position.x
-			y = @.player.balloon.position.y + 45
+			y = @.player.balloon.position.y + 35
 			z = @.player.balloon.position.z
 
 			# points that define the box

@@ -125,9 +125,19 @@ define [
 			light.position.set( x , y + 1000 , z )
 			light.target = @.balloon
 
+			# get camera bounds
+			width = site.stage.landscape.width
+			height = site.stage.landscape.height
+
+			maxX = ( width / 2 ) - 10
+			minX = -maxX
+
+			maxZ = ( height / 2 ) - 10
+			minZ = -maxZ
+
 			# position the camera
-			camera.position.x = x + ( Math.sin( Math.radians( @.angle )) * @.distance )
-			camera.position.z = z + ( Math.cos( Math.radians( @.angle )) * @.distance )
+			camera.position.x = Math.min( Math.max( x + ( Math.sin( Math.radians( @.angle )) * @.distance ) , minX ) , maxX )
+			camera.position.z = Math.min( Math.max( z + ( Math.cos( Math.radians( @.angle )) * @.distance ) , minZ ) , maxZ )
 			camera.position.y = y - ( Math.min( Math.max( @.velocity.y * 60 , -@.distance / 2 ) , @.distance / 2 ))
 
 			# look at the balloon

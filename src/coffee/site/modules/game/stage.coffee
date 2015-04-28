@@ -51,6 +51,7 @@ define [
 		loopTasks: [
 			"fan"
 			"player"
+			"landscape"
 			"line"
 			"collision"
 			"camera"

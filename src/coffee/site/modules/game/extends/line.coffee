@@ -83,7 +83,6 @@ define ->
 					point.position[ vertex ] += point.velocity[ vertex ]
 
 				point.velocity.y -= 9
-				if point.position.y < 1 then point.position.y = 1
 
 				i++
 

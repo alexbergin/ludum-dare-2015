@@ -61,9 +61,23 @@ define ->
 		
 		landscape: ->
 
-			# ground
-			if @.player.balloon.position.y <= 0
-				@.collide "y" , 1
+			# walls
+			width = site.stage.landscape.width
+			height = site.stage.landscape.height
+
+			if @.player.balloon.position.x <= -width / 2 
+				@.collide "x" , 1
+
+			if @.player.balloon.position.x >= width / 2 
+				@.collide "x" , -1
+
+			if @.player.balloon.position.z <= -height / 2 
+				@.collide "z" , 1
+
+			if @.player.balloon.position.z >= height / 2 
+				@.collide "z" , -1
+
+
 
 		collide: ( axis , direction ) ->
 			@.player.velocity[ axis ] = direction * Math.abs( @.player.velocity[ axis ]) * @.rebound

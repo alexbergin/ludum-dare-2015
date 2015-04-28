@@ -57,3 +57,11 @@ define ->
 
 				# add to the stage
 				site.stage.scene.add landscape
+
+		loop: =>
+
+			# place all the walls at the same y height,
+			# instant infinite tunnel
+			y = site.stage.player.balloon.position.y
+			for wall in @.walls
+				wall.position.y = y

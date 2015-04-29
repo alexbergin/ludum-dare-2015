@@ -55,6 +55,7 @@ define [
 			"line"
 			"collision"
 			"camera"
+			"wall"
 		]
 
 		# scale the canvas based on touch ability i guess

@@ -180,9 +180,15 @@ define ->
 			velocity = site.stage.player.velocity
 			angle = site.stage.player.angle
 
+			# set multiplyer
+			if site.stage.isTouch
+				mult = 0.1
+			else
+				mult = 0.02
+
 			# get our deltas
-			x = ( @.startX - @.x ) * 0.02
-			y = ( @.startY - @.y ) * 0.02
+			x = ( @.startX - @.x ) * mult
+			y = ( @.startY - @.y ) * mult
 
 			# set our left & right input velocity
 			xVel = Math.sin( Math.radians( angle - 90 )) * x

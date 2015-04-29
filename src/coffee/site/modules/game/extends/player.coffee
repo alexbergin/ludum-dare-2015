@@ -140,8 +140,8 @@ define [
 			z = @.balloon.position.z
 
 			# update light position
-			light.position.set( x , y - 1000 , z )
-			light.target = @.balloon
+			# light.position.set( 0 , y + 1500 , 0 )
+			# light.target = @.balloon
 
 			# get camera bounds
 			width = site.stage.landscape.width
@@ -156,7 +156,7 @@ define [
 			# position the camera
 			camera.position.x = Math.min( Math.max( x + ( Math.sin( Math.radians( @.angle )) * @.distance ) , minX ) , maxX )
 			camera.position.z = Math.min( Math.max( z + ( Math.cos( Math.radians( @.angle )) * @.distance ) , minZ ) , maxZ )
-			camera.position.y = y
+			camera.position.y = y - @.distance
 
 			# update the look coordinate
 			@.look.x = @.balloon.position.x
@@ -165,7 +165,7 @@ define [
 
 			# look at the balloon
 			camera.alpha.lookAt x: @.look.x , y: @.look.y , z: @.look.z
-			light.lookAt x: x , y: y , z: z
+			light.lookAt x: 0 , y: 0 , z: 0
 
 		die: =>
 			@.isDead = true

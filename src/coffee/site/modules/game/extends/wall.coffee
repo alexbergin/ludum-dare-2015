@@ -3,8 +3,8 @@ define ->
 	class Wall
 
 		colors: [
-			0xF9FDFF
-			0xF7FAFC
+			# 0xF9FDFF
+			0xE8F2F7
 		]
 
 		sections: []
@@ -14,7 +14,7 @@ define ->
 			scale = 300
 
 			i = 0
-			while i < 20
+			while i < 50
 
 				x = Math.round(( -site.stage.landscape.width / 2 ) / 300 ) * 300
 				while x < site.stage.landscape.width / 2
@@ -25,7 +25,7 @@ define ->
 						if Math.random() > 0.75
 							wall =
 								position: 
-									x: x , y: 1200 * i , z: y
+									x: x , y: 600 * i , z: y
 								scale:
 									x: scale , y: scale , z: scale
 
@@ -46,6 +46,8 @@ define ->
 			geometry = new THREE.BoxGeometry( 1 , 1 , 1)
 			material = new THREE.MeshBasicMaterial
 				color: @.colors[ Math.floor( Math.random() * @.colors.length )]
+				transparent: true
+				opacity: 1
 
 			# make the mesh
 			section = new THREE.Mesh geometry , material
@@ -57,16 +59,13 @@ define ->
 				section.position[ vertex ] = props.position[ vertex ]
 				section.scale[ vertex ] = props.scale[ vertex ]
 
-			# i'm sorry again
-			console.log section
-
 			# build the collision box
-			x1 = section.position.x + ( section.scale.x / 2 )
-			x2 = section.position.x - ( section.scale.x / 2 )
-			y1 = section.position.y + ( section.scale.y / 2 )
-			y2 = section.position.y - ( section.scale.y / 2 )
-			z1 = section.position.z + ( section.scale.z / 2 )
-			z2 = section.position.z - ( section.scale.z / 2 )
+			x1 = section.position.x + ( section.scale.x / 2 ) + 30
+			x2 = section.position.x - ( section.scale.x / 2 ) - 30
+			y1 = section.position.y + ( section.scale.y / 2 ) + 40
+			y2 = section.position.y - ( section.scale.y / 2 ) - 40
+			z1 = section.position.z + ( section.scale.z / 2 ) + 30
+			z2 = section.position.z - ( section.scale.z / 2 ) - 30
 
 			collision =
 				onCollision: self.onCollision
@@ -82,11 +81,17 @@ define ->
 			site.stage.collision.add section
 
 			# apply shadows
-			section.castShadow = false
-			section.receiveShadow = false
+			section.castShadow = true
+			section.receiveShadow = true
 
 			# add it to the scene
 			site.stage.scene.add section
+
+		loop: =>
+			for section in @.sections
+				opacity = Math.min( Math.max( ((( section.position.y + 300 ) - site.stage.player.balloon.position.y ) / 300 ) , 0 ) , 1 )
+				section.material.opacity = opacity
+				section.needsUpdate = true
 
 		onCollision: ( object ) ->
 		
@@ -94,9 +99,9 @@ define ->
 			direction = 0
 			axis = "y"
 
-			xDis = Math.min( Math.abs( player.balloon.position.x - ( object.position.x + object.scale.x / 2 )) , Math.abs( player.balloon.position.x - ( object.position.x - object.scale.x / 2 )))
-			yDis = Math.min( Math.abs( player.balloon.position.y - ( object.position.y + object.scale.y / 2 )) , Math.abs( player.balloon.position.y - ( object.position.y - object.scale.y / 2 )))
-			zDis = Math.min( Math.abs( player.balloon.position.z - ( object.position.z + object.scale.z / 2 )) , Math.abs( player.balloon.position.z - ( object.position.z - object.scale.z / 2 )))
+			xDis = Math.min( Math.abs( player.balloon.position.x - ( object.position.x + object.scale.x / 2 + 30 )) , Math.abs( player.balloon.position.x - ( object.position.x - object.scale.x / 2 - 30 )))
+			yDis = Math.min( Math.abs( player.balloon.position.y - ( object.position.y + object.scale.y / 2 + 30 )) , Math.abs( player.balloon.position.y - ( object.position.y - object.scale.y / 2 - 30 )))
+			zDis = Math.min( Math.abs( player.balloon.position.z - ( object.position.z + object.scale.z / 2 + 30 )) , Math.abs( player.balloon.position.z - ( object.position.z - object.scale.z / 2 - 30 )))
 
 			if Math.min( xDis , yDis , zDis ) is xDis
 				if player.balloon.position.x > object.position.x then direction = 1 else direction = -1

@@ -116,15 +116,15 @@ define ->
 			zDis = Math.min( Math.abs( player.balloon.position.z - ( object.position.z + object.scale.z / 2 + 30 )) , Math.abs( player.balloon.position.z - ( object.position.z - object.scale.z / 2 - 30 )))
 
 			if Math.min( xDis , yDis , zDis ) is xDis
-				if player.balloon.position.x > object.position.x then direction = 1 else direction = -1
+				if player.balloon.position.x > object.position.x then direction = 0.5 else direction = -0.5
 				axis = "x"
 
 			if Math.min( xDis , yDis , zDis ) is yDis
-				if player.balloon.position.y > object.position.y then direction = 1 else direction = -1
+				if player.balloon.position.y > object.position.y then direction = 1.2 else direction = -1.2
 				axis = "y"
 
 			if Math.min( xDis , yDis , zDis ) is zDis
-				if player.balloon.position.z > object.position.z then direction = 1 else direction = -1
+				if player.balloon.position.z > object.position.z then direction = 0.5 else direction = -0.5
 				axis = "z"
 
 			player.velocity[ axis ] = direction * Math.abs( player.velocity[ axis ]) * 1.01

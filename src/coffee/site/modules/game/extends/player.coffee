@@ -12,6 +12,7 @@ define [
 
 		# what distance + angle to hold the camera at
 		distance: 600
+		viewHeight: -1
 		angle: 0
 
 		# what velocity values get multiplied
@@ -132,16 +133,11 @@ define [
 
 			# store the camera & light
 			camera = site.stage.camera
-			light = site.stage.light.spot
 
 			# get the position of the balloon
 			x = @.balloon.position.x
 			y = @.balloon.position.y
 			z = @.balloon.position.z
-
-			# update light position
-			# light.position.set( 0 , y + 1500 , 0 )
-			# light.target = @.balloon
 
 			# get camera bounds
 			width = site.stage.landscape.width
@@ -153,10 +149,12 @@ define [
 			maxZ = ( height / 2 ) - 10
 			minZ = -maxZ
 
+			@.viewHeight = Math.min( 1 , Math.max( -1 , @.viewHeight ))
+
 			# position the camera
 			camera.position.x = Math.min( Math.max( x + ( Math.sin( Math.radians( @.angle )) * @.distance ) , minX ) , maxX )
 			camera.position.z = Math.min( Math.max( z + ( Math.cos( Math.radians( @.angle )) * @.distance ) , minZ ) , maxZ )
-			camera.position.y = y - @.distance
+			camera.position.y = y + ( @.viewHeight * @.distance )
 
 			# update the look coordinate
 			@.look.x = @.balloon.position.x
@@ -165,7 +163,6 @@ define [
 
 			# look at the balloon
 			camera.alpha.lookAt x: @.look.x , y: @.look.y , z: @.look.z
-			light.lookAt x: 0 , y: 0 , z: 0
 
 		die: =>
 			@.isDead = true

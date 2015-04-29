@@ -4,12 +4,13 @@ define ->
 	# some levels or something
 	class Landscape
 
-		width: 2000
-		height: 2000
-
 		walls: []
 
 		init: ->
+
+			# get the width & height from the level maker
+			@.width = site.stage.level.gridSize * site.stage.level.width
+			@.height = site.stage.level.gridSize * site.stage.level.depth 
 
 			# array to position walls based on
 			# defined width and height

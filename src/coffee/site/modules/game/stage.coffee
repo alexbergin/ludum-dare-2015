@@ -5,6 +5,7 @@ define [
 	"site/modules/game/input"
 	"site/modules/game/light"
 	"site/modules/game/collision"
+	"site/modules/game/level"
 	"site/modules/game/extends/landscape"
 	"site/modules/game/extends/spikes"
 	"site/modules/game/extends/line"
@@ -19,6 +20,7 @@ define [
 	Input
 	Light
 	Collision
+	Level
 	Landscape
 	Spikes
 	Line
@@ -36,14 +38,13 @@ define [
 		# what modules to call .init() on
 		setupTasks: [
 			"light"
+			"landscape"
 			"camera"
 			"collision"
-			"landscape"
 			"player"
 			"line"
 			"spikes"
 			"input"
-			"wall"
 			"fan"
 		]
 
@@ -56,6 +57,7 @@ define [
 			"collision"
 			"camera"
 			"wall"
+			"level"
 		]
 
 		# scale the canvas based on touch ability i guess
@@ -64,12 +66,13 @@ define [
 		# game modules
 		camera: new Camera
 		collision: new Collision
-		light: new Light
-		landscape: new Landscape
-		input: new Input
 		fan: new Fan
-		player: new Player
+		input: new Input
+		landscape: new Landscape
+		level: new Level
+		light: new Light
 		line: new Line
+		player: new Player
 		spikes: new Spikes
 		wall: new Wall
 
@@ -100,7 +103,9 @@ define [
 			@.renderer = new THREE.WebGLRenderer
 
 			# get the landscape scale
-			scale = ( site.stage.landscape.width + site.stage.landscape.height ) / 2
+			width = @.level.width * @.level.gridSize
+			height = @.level.height * @.level.gridSize
+			scale = ( width + height ) / 2
 			mult = ( scale / 1200  )
 
 			# scene preferences

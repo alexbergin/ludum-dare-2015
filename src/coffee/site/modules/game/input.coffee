@@ -167,11 +167,11 @@ define ->
 
 			# get and contain the delta for movement
 			deltaX = ( @.startX - @.x ) * 0.5
-			deltaY = ( @.startY - @.y ) * 0.0001
+			# deltaY = ( @.startY - @.y ) * 0.0001
 
 			# apply the movement
 			site.stage.player.angle += deltaX
-			site.stage.player.viewHeight += deltaY
+			# site.stage.player.viewHeight += deltaY
 
 			# reset the difference
 			@.startX = @.x

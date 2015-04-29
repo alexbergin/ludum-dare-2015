@@ -12,7 +12,6 @@ define [
 
 		# what distance + angle to hold the camera at
 		distance: 600
-		viewHeight: -1
 		angle: 0
 
 		# what velocity values get multiplied
@@ -20,7 +19,7 @@ define [
 		friction: 0.98
 
 		# added to the y axis each loop
-		gravity: 0.15
+		gravity: 0.3
 
 		# makes things appear a little windy
 		simAngle: 0
@@ -154,7 +153,7 @@ define [
 			# position the camera
 			camera.position.x = Math.min( Math.max( x + ( Math.sin( Math.radians( @.angle )) * @.distance ) , minX ) , maxX )
 			camera.position.z = Math.min( Math.max( z + ( Math.cos( Math.radians( @.angle )) * @.distance ) , minZ ) , maxZ )
-			camera.position.y = y + ( @.viewHeight * @.distance )
+			camera.position.y = y + ( -1 * @.distance )
 
 			# update the look coordinate
 			@.look.x = @.balloon.position.x
@@ -162,7 +161,7 @@ define [
 			@.look.z = @.balloon.position.z
 
 			# look at the balloon
-			camera.alpha.lookAt x: @.look.x , y: @.look.y , z: @.look.z
+			camera.alpha.lookAt x: @.look.x , y: @.look.y - ( -1 * @.distance ) , z: @.look.z
 
 		die: =>
 			@.isDead = true

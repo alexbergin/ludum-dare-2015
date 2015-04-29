@@ -14,8 +14,8 @@ define ->
 
 		# number of grid sections
 		height: 10
-		width: 10
-		depth: 10
+		width: 5
+		depth: 5
 
 		loop: =>
 
@@ -101,16 +101,24 @@ define ->
 
 		makeWalls: ( layer ) ->
 
+			# make sure there's at least 1 opening
+			opening = Math.floor( Math.random() * ( @.width * @.depth ))
+
 			# if it's the bottom layer, make it a wall
 			for grid in layer
 				if grid.y is 0 then grid.wall = true
 
-			# position the openings randomly, with at least 1 opening
-			opening = Math.floor( Math.random() * ( @.width * @.depth ))
-			for grid in layer
+				if Math.random() > 0.95 then grid.wall = true
+
+				# position the openings randomly, with at least 1 opening
 				if grid.y is 0 then opening--
 				if opening is 0 then grid.wall = false
+
+				# add some more random openings
 				if Math.random() > 0.9 then grid.wall = false
+
+				# make sure there's room to advance, always
+				if grid.y is @.height - 1 or grid.y is 1 then grid.wall = false
 
 			# define the wall parts
 			for grid in layer

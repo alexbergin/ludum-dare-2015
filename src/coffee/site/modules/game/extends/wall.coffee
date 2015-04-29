@@ -91,7 +91,7 @@ define ->
 
 		loop: =>
 			for section in @.sections
-				opacity = Math.min( Math.max( ((( section.position.y ) - ( site.stage.camera.position.y )) / 300 ) , 0.5 ) , 1 )
+				opacity = Math.min( Math.max( ((( section.position.y ) - ( site.stage.player.balloon.position.y )) / 300 ) , 0.1 ) , 1 )
 				section.material.opacity = opacity
 				section.needsUpdate = true
 

@@ -7,13 +7,13 @@ define ->
 		layers: []
 
 		# what the highest grid point it
-		position: 0
+		position: -4685
 
 		# width/height/depth of the grid
 		gridSize: 300
 
 		# number of grid sections
-		height: 10
+		height: 5
 		width: 5
 		depth: 5
 
@@ -91,7 +91,6 @@ define ->
 				z++
 
 			grid = @.makeWalls grid
-			@.updateLight()
 
 			layer =
 				position: @.position
@@ -146,10 +145,3 @@ define ->
 					# call the build function
 					grid.wall = site.stage.wall.build( section )
 			return layer
-
-		updateLight: ->
-			light = site.stage.light.spot
-			x = @.width * @.gridSize * 0.5
-			y = ( @.position + @.height ) - ( @.gridSize * @.height * 0.5 )
-			z = @.depth * @.gridSize * 0.5
-			light.position.set( x , y , z )

@@ -2,6 +2,8 @@ define ->
 
 	class Input
 
+		shiftKey: false
+
 		startX: 0
 		x: 0
 
@@ -29,8 +31,24 @@ define ->
 			window.addEventListener "mousemove" , @.onMouseMove
 			window.addEventListener "mouseup" , @.onMouseUp
 
+			# listen for key events
+			window.addEventListener "keydown" , @.onKeyDown
+			window.addEventListener "keyup" , @.onKeyUp
+
 			# hack to allow us to use the right mouse button
 			document.oncontextmenu = document.body.oncontextmenu = -> return false
+
+		onKeyDown: ( e ) =>
+
+			# listen for key press
+			switch e.keyCode
+				when 16 then @.shiftKey = true
+
+		onKeyUp: ( e ) =>
+
+			# listen for key release
+			switch e.keyCode
+				when 16 then @.shiftKey = false
 
 		onMouseWheel: ( e ) ->
 
@@ -41,13 +59,13 @@ define ->
 				delta = e.wheelDelta * 0.2
 
 				# apply the delta to the current position
-				distance = site.stage.player.distance - delta
+				distance = site.stage.camera.distance - delta
 
 				# bound it between a minimum and maximum
-				distance = Math.min( 600 , Math.max( 120 , distance ))
+				distance = Math.min( 2500 , Math.max( 300 , distance ))
 
 				# apply to the camera
-				site.stage.player.distance = distance
+				site.stage.camera.distance = distance
 
 		onMouseMove: ( e ) =>
 
@@ -59,22 +77,29 @@ define ->
 				@.y = e.clientY
 
 				# position the camera
-				if @.rightDown is true then @.updateCamera()
+				if @.rightDown is true then @.updateRotation()
 
 				# move the balloon
-				if @.leftDown is true then @.updateBalloon()
+				if @.leftDown is true then @.updatePosition()
 
 		onTouchMove: ( e ) =>
 
-			# get the current mouse position
-			@.x = e.touches[0].clientX
-			@.y = e.touches[0].clientY
+			# get the current average touch position
+			@.x = 0
+			@.y = 0
+
+			for touch in e.touches
+				@.x += touch.clientX
+				@.y += touch.clientY
+
+			@.x = @.x / e.touches.length
+			@.y = @.y / e.touches.length
 
 			# position the camera
-			if @.rightDown is true then @.updateCamera()
+			if @.rightDown is true then @.updateRotation()
 
 			# move the balloon
-			if @.leftDown is true then @.updateBalloon()
+			if @.leftDown is true then @.updatePosition()
 
 
 		onMouseDown: ( e ) =>
@@ -163,47 +188,64 @@ define ->
 			#grab the camera
 			@.rightDown = true
 
-		updateCamera: ->
+		updateRotation: ->
 
 			# get and contain the delta for movement
 			deltaX = ( @.startX - @.x ) * 0.5
-			# deltaY = ( @.startY - @.y ) * 0.0001
 
 			# apply the movement
-			site.stage.player.angle += deltaX
-			# site.stage.player.viewHeight += deltaY
+			site.stage.camera.hAngle += deltaX
 
 			# reset the difference
 			@.startX = @.x
 
-		updateBalloon: ->
-
-			# get the balloon's velocity, rotation, & viewing angle
-			velocity = site.stage.player.velocity
-			angle = site.stage.player.angle
-
-			# set multiplyer
+			# use the y delta to move the camera vertically
+			# on a touch device
 			if site.stage.isTouch
-				mult = 0.1
+
+				# get the anchor position
+				anchor = site.stage.camera.anchor
+
+				# get the input amount
+				deltaY = ( @.startY - @.y ) * 4
+				anchor.y += deltaY
+
+				# reset to get delta
+				@.startY = @.y
+
+		updatePosition: ->
+
+			# get the camera's rotation & position
+			anchor = site.stage.camera.anchor
+			angle = site.stage.camera.hAngle
+
+			# set movement amount based on touch
+			if site.stage.isTouch
+				mult = 4
 			else
-				mult = 0.02
+				mult = 2
 
 			# get our deltas
 			x = ( @.startX - @.x ) * mult
 			y = ( @.startY - @.y ) * mult
 
-			# set our left & right input velocity
-			xVel = Math.sin( Math.radians( angle - 90 )) * x
-			zVel = Math.cos( Math.radians( angle - 90 )) * x
+			# apply the input to the camera anchor
+			if @.shiftKey is true
+				anchor.y += y
 
-			# add our forward and backwards velocity
-			xVel += Math.sin( Math.radians( angle )) * y
-			zVel += Math.cos( Math.radians( angle )) * y
+			else
 
-			# apply the input to the balloon velocity
-			if site.stage.player.isDead is false
-				velocity.x += xVel
-				velocity.z += zVel
+				# set our left & right input velocity
+				xVel = Math.sin( Math.radians( angle + 90 )) * x
+				yVel = Math.cos( Math.radians( angle + 90 )) * x
+
+				# add our forward and backwards velocity
+				xVel += Math.sin( Math.radians( angle )) * y
+				yVel += Math.cos( Math.radians( angle )) * y
+
+				# add deltas
+				anchor.x += xVel
+				anchor.z += yVel
 
 			# reset the delta
 			@.startX = @.x

@@ -81,8 +81,8 @@ define ->
 			site.stage.collision.add section
 
 			# apply shadows
-			section.castShadow = false
-			section.receiveShadow = false
+			section.castShadow = true
+			section.receiveShadow = true
 
 			# add it to the scene
 			site.stage.scene.add section
@@ -91,7 +91,7 @@ define ->
 
 		loop: =>
 			for section in @.sections
-				opacity = Math.min( Math.max( ((( section.position.y ) - ( site.stage.player.balloon.position.y )) / 300 ) , 0.1 ) , 1 )
+				opacity = 1 # Math.min( Math.max( ((( section.position.y ) - ( site.stage.player.balloon.position.y )) / 300 ) , 0.1 ) , 1 )
 				section.material.opacity = opacity
 				section.needsUpdate = true
 

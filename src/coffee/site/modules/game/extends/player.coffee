@@ -10,26 +10,16 @@ define [
 
 	class Player extends Obj
 
-		# what distance + angle to hold the camera at
-		distance: 600
-		angle: 0
-
 		# what velocity values get multiplied
 		# by on each loop
 		friction: 0.98
 
 		# added to the y axis each loop
-		gravity: 0.3
+		gravity: 0.15
 
 		# makes things appear a little windy
 		simAngle: 0
 		simMult: 0.01
-
-		# camera looks at this vector
-		look:
-			x: 0
-			y: 0
-			z: 0
 
 		# values that get added per loop
 		velocity:
@@ -79,9 +69,6 @@ define [
 				# move the mesh
 				@.updatePosition()
 
-				# move the camera to its new position
-				@.updateCamera()
-
 				# update the mesh
 				@.updateMesh()
 
@@ -127,41 +114,6 @@ define [
 			# update position + rotate
 			for vertex in vertices
 				@.balloon.position[ vertex ] += @.velocity[ vertex ]
-
-		updateCamera: ->
-
-			# store the camera & light
-			camera = site.stage.camera
-
-			# get the position of the balloon
-			x = @.balloon.position.x
-			y = @.balloon.position.y
-			z = @.balloon.position.z
-
-			# get camera bounds
-			width = site.stage.landscape.width
-			height = site.stage.landscape.height
-
-			maxX = ( width / 2 ) - 10
-			minX = -maxX
-
-			maxZ = ( height / 2 ) - 10
-			minZ = -maxZ
-
-			@.viewHeight = Math.min( 1 , Math.max( -1 , @.viewHeight ))
-
-			# position the camera
-			camera.position.x = Math.min( Math.max( x + ( Math.sin( Math.radians( @.angle )) * @.distance ) , minX ) , maxX )
-			camera.position.z = Math.min( Math.max( z + ( Math.cos( Math.radians( @.angle )) * @.distance ) , minZ ) , maxZ )
-			camera.position.y = y + ( -1 * @.distance )
-
-			# update the look coordinate
-			@.look.x = @.balloon.position.x
-			@.look.y = @.balloon.position.y
-			@.look.z = @.balloon.position.z
-
-			# look at the balloon
-			camera.alpha.lookAt x: @.look.x , y: @.look.y - ( -1 * @.distance ) , z: @.look.z
 
 		die: =>
 			@.isDead = true

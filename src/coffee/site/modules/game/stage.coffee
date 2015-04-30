@@ -106,7 +106,7 @@ define [
 			width = @.level.width * @.level.gridSize
 			height = @.level.height * @.level.gridSize
 			scale = ( width + height ) / 2
-			mult = ( scale / 1200  )
+			mult = ( scale / 600  )
 
 			# scene preferences
 			@.scene.fog = new THREE.Fog 0xCDE6F2 , 750 *  mult , 1750 * mult

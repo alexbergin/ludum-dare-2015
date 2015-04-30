@@ -8,67 +8,34 @@ define ->
 
 		init: ->
 
-			# get the width & height from the level maker
-			@.width = site.stage.level.gridSize * site.stage.level.width
-			@.height = site.stage.level.gridSize * site.stage.level.depth 
+			# make it larger than fog
+			@.width = 50000
+			@.height = 50000
 
-			# array to position walls based on
-			# defined width and height
-			pos = [
-					x: -@.width / 2,
-					s: @.height
-					z: 0
-					r: Math.radians( 90 )
-					c: 0xF9FDFF
-				,
-					x: @.width / 2
-					s: @.height
-					z: 0
-					r: Math.radians( 270 )
-					c: 0xF9FDFF
-				,
-					x: 0
-					s: @.width
-					z: -@.height / 2
-					r: Math.radians( 0 )
-					c: 0xF7FAFC
-				,
-					x: 0
-					s: @.width
-					z: @.height / 2
-					r: Math.radians( 180 )
-					c: 0xF7FAFC
-			]
+			# define material
+			geometry = new THREE.PlaneBufferGeometry(  @.width , @.height , 1 , 1 )
+			material = new THREE.MeshBasicMaterial
+				color: 0xF9FDFF
 
-			# temp wall
+			# make a new mesh
+			landscape = new THREE.Mesh geometry , material
 
-			max = Math.max( @.width , @.height )
+			# position
+			landscape.position.x = 0
+			landscape.position.y = 0
+			landscape.position.z = 0
+			landscape.rotation.x = Math.radians( -90 )
 
-			for placement in pos
+			# save to class
+			@.ground = landscape
 
-				# define material
-				geometry = new THREE.PlaneBufferGeometry(  placement.s , max * 5 , 1 , 1 )
-				material = new THREE.MeshBasicMaterial
-					color: placement.c
-
-				# make a new mesh
-				landscape = new THREE.Mesh geometry , material
-
-				# position
-				landscape.position.x = placement.x
-				landscape.position.z = placement.z
-				landscape.rotation.y = placement.r
-
-				# add to array to update
-				@.walls.push landscape
-
-				# add to the stage
-				site.stage.scene.add landscape
+			# add to the stage
+			site.stage.scene.add @.ground
 
 		loop: =>
 
-			# place all the walls at the same y height,
-			# instant infinite tunnel
-			y = site.stage.player.balloon.position.y
-			for wall in @.walls
-				wall.position.y = y
+			# make the ground follow the camera
+			x = site.stage.camera.alpha.position.x
+			z = site.stage.camera.alpha.position.z
+			@.ground.position.x = x
+			@.ground.position.z = z

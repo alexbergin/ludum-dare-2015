@@ -90,6 +90,7 @@ module.exports = function( grunt ) {
 				cwd: "src/",
 				src: [
 					"models/**",
+					"images/**",
 					"fonts/**"
 				],
 				dest: "app"
@@ -131,20 +132,6 @@ module.exports = function( grunt ) {
 			main: {
 				src: "app/index.html",
 				dest: "app/index.html"
-			}
-		},
-
-		imagemin: {
-			build: {
-				options: {
-					optimizationLevel: 4
-				},
-				files: [{
-					expand: true,
-					cwd: "src/images/",
-					src: [ "**/*.{png,jpg,gif}"],
-					dest: "app/images/"
-				}]
 			}
 		},
 
@@ -242,7 +229,6 @@ module.exports = function( grunt ) {
 		"autoprefixer:dist",
 		"coffee:dev",
 		"copy:app",
-		"imagemin",
 		"copy:dist",
 		"cssmin",
 		"htmlmin",
@@ -257,7 +243,6 @@ module.exports = function( grunt ) {
 	// update it a single time
 	grunt.registerTask( "devupdate", [
 		"copy:app",
-		"imagemin",
 		"compass",
 		"coffee:dev",
 		"mustache_render",

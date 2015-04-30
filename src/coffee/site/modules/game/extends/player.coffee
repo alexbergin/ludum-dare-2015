@@ -48,7 +48,7 @@ define [
 					x: 30 , y: 30 , z: 30
 
 				position: 
-					x: 0 , y: 0 , z: 0
+					x: 0 , y: 300 , z: 0
 
 				callback: @.ready
 			)

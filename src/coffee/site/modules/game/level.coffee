@@ -7,7 +7,7 @@ define ->
 		layers: []
 
 		# what the highest grid point it
-		position: -4685
+		position: -4300
 
 		# width/height/depth of the grid
 		gridSize: 300

@@ -5,6 +5,7 @@ define [
 	"site/modules/game/input"
 	"site/modules/game/light"
 	"site/modules/game/collision"
+	"site/modules/game/pointer"
 	"site/modules/game/level"
 	"site/modules/game/extends/landscape"
 	"site/modules/game/extends/spikes"
@@ -20,6 +21,7 @@ define [
 	Input
 	Light
 	Collision
+	Pointer
 	Level
 	Landscape
 	Spikes
@@ -41,6 +43,7 @@ define [
 			"landscape"
 			"camera"
 			"collision"
+			"pointer"
 			"player"
 			"line"
 			"spikes"
@@ -73,6 +76,7 @@ define [
 		light: new Light
 		line: new Line
 		player: new Player
+		pointer: new Pointer
 		spikes: new Spikes
 		wall: new Wall
 

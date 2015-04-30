@@ -33,12 +33,12 @@ define ->
 			# of the camera. shade value is multiplied by the rgb to return
 			# the final value
 			shade = [ 
-				1.015 , # west
-				1.015 , # east
-				1.050 , # top 
-				0.985 , # bottom
-				1.030 , # north
-				1.000   # south
+				1.015 # west
+				1.015 # east
+				1.050 # top 
+				0.985 # bottom
+				1.030 # north
+				1.000 # south
 			]
 
 			i = 0

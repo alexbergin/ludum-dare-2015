@@ -45,6 +45,7 @@ define ->
 
 			@.getTargetPosition()
 			@.updatePosition()
+			@.collision()
 
 		getTargetPosition: ->
 
@@ -76,6 +77,11 @@ define ->
 			light = site.stage.light.spot
 			light.position.set( @.alpha.position.x , @.alpha.position.y + 1000 , @.alpha.position.z )
 			light.lookAt @.alpha.position
+
+		collision: ->
+
+			# keep the anchor above ground
+			@.anchor.y = Math.max( 0 , @.anchor.y )
 
 		ease: ( prop , target , rate ) ->
 

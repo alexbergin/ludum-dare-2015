@@ -8,12 +8,16 @@ define ->
 
 		init: ->
 
-			# make it larger than fog
-			@.width = 50000
-			@.height = 50000
+			@.buildGround()
 
-			# define material
-			geometry = new THREE.PlaneBufferGeometry(  @.width , @.height , 1 , 1 )
+		buildGround: ->
+
+			# make it larger than fog
+			@.width = 20000
+			@.height = 20000
+
+			# define geometry & material
+			geometry = new THREE.PlaneGeometry(  @.width , @.height , 1 , 1 )
 			material = new THREE.MeshBasicMaterial
 				color: 0xF9FDFF
 
@@ -31,6 +35,7 @@ define ->
 
 			# add to the stage
 			site.stage.scene.add @.ground
+
 
 		loop: =>
 

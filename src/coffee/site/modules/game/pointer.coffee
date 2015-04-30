@@ -75,9 +75,9 @@ define ->
 					i++
 
 				# save the point if the intersection isnt null
-				if intersect.object.type is "Mesh" then @.getPoint intersect
+				if intersect.object.type is "Mesh" then @.setPosition intersect
 
-		getPoint: ( intersect ) ->
+		setPosition: ( intersect ) ->
 
 			# save the position
 			@.position = intersect.point

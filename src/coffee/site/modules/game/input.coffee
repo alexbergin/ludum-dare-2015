@@ -44,14 +44,13 @@ define ->
 			# listen for key press
 			switch e.keyCode
 				when 16 then @.shiftKey = true
-				when 65 then @.building true
 
 		onKeyUp: ( e ) =>
 
 			# listen for key release
 			switch e.keyCode
 				when 16 then @.shiftKey = false
-				when 65 then @.building false
+				when 65 then @.toggleBuilding()
 
 		onMouseWheel: ( e ) =>
 
@@ -259,8 +258,7 @@ define ->
 			@.startX = @.x
 			@.startY = @.y
 
-		building: ( state ) =>
+		toggleBuilding: =>
 
-			# set the building state
-			site.stage.level.isBuilding = state
-			@.isBuilding = state
+			if @.isBuilding is true then @.isBuilding = false else @.isBuilding = true
+			site.stage.level.isBuilding = @.isBuilding

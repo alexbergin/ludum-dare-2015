@@ -29,7 +29,7 @@ define ->
 			# make it transparent
 			@.block.material.transparent = true
 			@.block.material.opacity = 0.5
-			@.block.material.color.setHex( 0x8BDDD2 )
+			@.block.material.color.setHex( 0x6ADDCE )
 			@.block.material.needsUpdate = true
 
 			# no collision
@@ -37,7 +37,7 @@ define ->
 
 		addListeners: ->
 
-			window.addEventListener "mouseup" , @.onMouseUp
+			window.addEventListener "mousedown" , @.onMouseUp
 
 		onMouseUp: ( e ) =>
 			console.log e
@@ -58,7 +58,8 @@ define ->
 
 		removeBlock: =>
 			block = site.stage.pointer.activeObject
-			if block isnt null and block.playerPlaced is true
+			console.log block
+			if block isnt null and block.playerPlaced is true and block.parent isnt undefined
 				site.stage.wall.destroy block
 
 		loop: =>

@@ -111,7 +111,7 @@ define [
 			mult = 1500 / 600 
 
 			# scene preferences
-			@.scene.fog = new THREE.Fog 0xCDE6F2 , 750 *  mult , 1750 * mult
+			@.scene.fog = new THREE.Fog 0xCDE6F2 , 1500 *  mult , 2500 * mult
 
 			# set renderer preferences
 			@.renderer.setClearColor 0xCDE6F2

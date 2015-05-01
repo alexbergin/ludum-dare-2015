@@ -3,145 +3,89 @@ define ->
 	# generates the game level
 	class Level
 
-		# storing generated layers in this array
-		layers: []
-
-		# what the highest grid point it
-		position: -4300
+		# check if the user is building anything
+		isBuilding: false
 
 		# width/height/depth of the grid
 		gridSize: 300
 
-		# number of grid sections
-		height: 5
-		width: 5
-		depth: 5
+		init: ->
+
+			@.setup()
+			@.addListeners()
+
+		setup: ->
+
+			# make the placement block
+			@.block = site.stage.wall.build
+				scale:
+					x: @.gridSize , y: @.gridSize , z: @.gridSize
+				position:
+					x: 0 , y: 0 , z: 0
+
+			# make sure it doesn't get pointer detection
+			@.block.pointerDetection = false
+
+			# make it transparent
+			@.block.material.transparent = true
+			@.block.material.opacity = 0.5
+			@.block.material.color.setHex( 0x8BDDD2 )
+			@.block.material.needsUpdate = true
+
+			# no collision
+			@.block.collision.onCollision = -> return null
+
+		addListeners: ->
+
+			window.addEventListener "mouseup" , @.onMouseUp
+
+		onMouseUp: ( e ) =>
+			console.log e
+
+			if @.isBuilding
+				switch e.which
+					when 1 then @.addBlock( @.block.position.x , @.block.position.y , @.block.position.z )
+					when 3 then @.removeBlock()
+
+		addBlock: ( x , y , z ) ->
+			block = site.stage.wall.build
+				scale:
+					x: @.gridSize , y: @.gridSize , z: @.gridSize
+				position:
+					x: x , y: y , z: z
+
+			block.playerPlaced = true
+
+		removeBlock: =>
+			block = site.stage.pointer.activeObject
+			if block isnt null and block.playerPlaced is true
+				site.stage.wall.destroy block
 
 		loop: =>
 
-			# check to see if the player is at an altitude
-			# that needs a new layer
-			if site.stage.player.balloon.position.y + ( @.gridSize * @.height ) > @.position
-				@.position += @.gridSize * @.height
-				@.buildLayer()
+			@.updatePosition()
+			@.updateCursor()
 
-			# destroy old layers
-			i = 0
-			n = -1
-			for layer in @.layers
-				if layer.position < site.stage.player.balloon.position.y - ( @.gridSize * @.height ) then n = i
-				i++
-			if n >= 0 then @.destroy @.layers[n]
+		updatePosition: ->
 
-		destroy: ( layer ) ->
+			if @.isBuilding
+				vertices = [ "x" , "y" , "z" ]
 
-			# remove inner elements
-			for grid in layer.grid
+				for vertex in vertices
+					@.block.position[ vertex ] = Math.round( site.stage.pointer.position[ vertex ] / @.gridSize ) * @.gridSize
 
-				# remove wall
-				if grid.wall isnt false
-					site.stage.wall.destroy grid.wall
+				switch site.stage.pointer.position.faceIndex
+					when 2 then @.block.position.x -= @.gridSize
+					when 3 then @.block.position.x -= @.gridSize
+					when 10 then @.block.position.z -= @.gridSize
+					when 11 then @.block.position.z -= @.gridSize
 
-			# remove from sections array
-			i = 0
-			n = 0
-			for l in @.layers
-				if l is layer then n = i
-				i++
+				@.block.position.y = Math.max( 0 , @.block.position.y )
 
-			@.layers.splice( n , 1 )
+		updateCursor: ->
+			if @.isBuilding
+				@.block.material.opacity = 0.5
+			else
+				@.block.material.opacity = 0
+			@.block.material.needsUpdate = true
 
-		buildLayer: ->
-
-			# make a new grid array
-			grid = []
-
-			# fill it with the base object
-
-			# loop through each z
-			z = 0
-			while z < @.depth
-
-				# loop through each x
-				x = 0
-				while x < @.width
-
-					# loop through each y
-					y = 0
-					while y < @.height
-
-						# set up grid data
-						props =
-							wall: false
-							fan: 
-								vertical: null
-								direction: null
-							spikes:
-								vertical: null
-								direction: null
-							x: x
-							y: y
-							z: z
-
-						# save to the layer
-						grid.push props
-
-						y++
-					x++
-				z++
-
-			grid = @.makeWalls grid
-
-			layer =
-				position: @.position
-				grid: grid
-
-			@.layers.push layer
-
-		makeWalls: ( layer ) ->
-
-			# make sure there's at least 1 opening
-			opening = Math.floor( Math.random() * ( @.width * @.depth ))
-
-			# if it's the bottom layer, make it a wall
-			for grid in layer
-				if grid.y is 0 then grid.wall = true
-
-				if Math.random() > 0.95 then grid.wall = true
-
-				# position the openings randomly, with at least 1 opening
-				if grid.y is 0 then opening--
-				if opening is 0 then grid.wall = false
-
-				# add some more random openings
-				if Math.random() > 0.9 then grid.wall = false
-
-				# make sure there's room to advance, always
-				if grid.y is @.height - 1 or grid.y is 1 then grid.wall = false
-
-			# define the wall parts
-			for grid in layer
-
-				# only build on wall = true
-				if grid.wall is true
-					
-					# position relative to the shaft
-					x = ( grid.x * @.gridSize ) - ( @.width * @.gridSize * 0.5 ) + ( @.gridSize * 0.5 )
-					y = ( grid.y * @.gridSize ) + @.position
-					z = ( grid.z * @.gridSize ) - ( @.depth * @.gridSize * 0.5 ) + ( @.gridSize * 0.5 )
-					size = @.gridSize
-
-					# define the wall section
-					section =
-						position:
-							x: x
-							y: y
-							z: z
-						scale: 
-							x: size 
-							y: size
-							z: size
-
-					# call the build function
-					grid.wall = site.stage.wall.build( section )
-			return layer

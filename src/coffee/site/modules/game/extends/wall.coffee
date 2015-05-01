@@ -90,10 +90,6 @@ define ->
 			return section
 
 		loop: =>
-			for section in @.sections
-				opacity = 1 # Math.min( Math.max( ((( section.position.y ) - ( site.stage.player.balloon.position.y )) / 300 ) , 0.1 ) , 1 )
-				section.material.opacity = opacity
-				section.needsUpdate = true
 
 		destroy: ( section ) ->
 			exists = true

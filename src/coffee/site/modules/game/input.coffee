@@ -2,6 +2,7 @@ define ->
 
 	class Input
 
+		isBuilding: false
 		shiftKey: false
 
 		startX: 0
@@ -43,17 +44,19 @@ define ->
 			# listen for key press
 			switch e.keyCode
 				when 16 then @.shiftKey = true
+				when 65 then @.building true
 
 		onKeyUp: ( e ) =>
 
 			# listen for key release
 			switch e.keyCode
 				when 16 then @.shiftKey = false
+				when 65 then @.building false
 
-		onMouseWheel: ( e ) ->
+		onMouseWheel: ( e ) =>
 
 			# do nothing if touch
-			if site.stage.isTouch is false
+			if site.stage.isTouch is false and @.isBuilding is false
 
 				# get how much to change the distance
 				delta = e.wheelDelta * 0.2
@@ -69,8 +72,8 @@ define ->
 
 		onMouseMove: ( e ) =>
 
-			# do nothing if touch
-			if site.stage.isTouch is false
+			# do nothing if touch or building
+			if site.stage.isTouch is false and @.isBuilding is false
 
 				# get the current mouse position
 				@.x = e.clientX
@@ -84,28 +87,31 @@ define ->
 
 		onTouchMove: ( e ) =>
 
-			# get the current average touch position
-			@.x = 0
-			@.y = 0
+			# do nothing if building
+			if @.isBuilding is false
+			
+				# get the current average touch position
+				@.x = 0
+				@.y = 0
 
-			for touch in e.touches
-				@.x += touch.clientX
-				@.y += touch.clientY
+				for touch in e.touches
+					@.x += touch.clientX
+					@.y += touch.clientY
 
-			@.x = @.x / e.touches.length
-			@.y = @.y / e.touches.length
+				@.x = @.x / e.touches.length
+				@.y = @.y / e.touches.length
 
-			# position the camera
-			if @.rightDown is true then @.updateRotation()
+				# position the camera
+				if @.rightDown is true then @.updateRotation()
 
-			# move the balloon
-			if @.leftDown is true then @.updatePosition()
+				# move the balloon
+				if @.leftDown is true then @.updatePosition()
 
 
 		onMouseDown: ( e ) =>
 
 			# do nothing if touch
-			if site.stage.isTouch is false
+			if site.stage.isTouch is false and @.isBuilding is false
 
 				# stop default
 				e.preventDefault()
@@ -119,22 +125,24 @@ define ->
 
 		onTouchStart: ( e ) =>
 			
-			# stop any default
-			e.preventDefault()
+			if @.isBuilding is false
 
-			# store the inital touch position
-			@.x = e.touches[0].clientX
-			@.y = e.touches[0].clientY
+				# stop any default
+				e.preventDefault()
 
-			# detect number of touches
-			switch e.touches.length
-				when 1 then @.onLeftDown()
-				when 2 then @.onRightDown()
+				# store the inital touch position
+				@.x = e.touches[0].clientX
+				@.y = e.touches[0].clientY
+
+				# detect number of touches
+				switch e.touches.length
+					when 1 then @.onLeftDown()
+					when 2 then @.onRightDown()
 
 		onMouseUp: ( e ) =>
 
 			# do nothing if touch
-			if site.stage.isTouch is false
+			if site.stage.isTouch is false and @.isBuilding is false
 
 				# stop default
 				e.preventDefault()
@@ -152,7 +160,7 @@ define ->
 			e.preventDefault()
 
 			# make sure all touches are done
-			if e.touches.length is 0
+			if e.touches.length is 0 and @.isBuilding is false
 
 				# release camera and balloon
 				@.onLeftUp()
@@ -166,7 +174,7 @@ define ->
 		onLeftDown: ->
 
 			# get starting position
-			if @.leftDown is false and @.rightDown is false
+			if @.leftDown is false and @.rightDown is false and @.isBuilding is false
 				@.startX = @.x
 				@.startY = @.y
 
@@ -181,7 +189,7 @@ define ->
 		onRightDown: ->
 
 			# get starting position
-			if @.leftDown is false and @.rightDown is false
+			if @.leftDown is false and @.rightDown is false and @.isBuilding is false
 				@.startX = @.x
 				@.startY = @.y
 
@@ -250,3 +258,9 @@ define ->
 			# reset the delta
 			@.startX = @.x
 			@.startY = @.y
+
+		building: ( state ) =>
+
+			# set the building state
+			site.stage.level.isBuilding = state
+			@.isBuilding = state

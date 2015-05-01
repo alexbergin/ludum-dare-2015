@@ -26,7 +26,7 @@ define ->
 
 			# position
 			landscape.position.x = 0
-			landscape.position.y = 0
+			landscape.position.y = -150
 			landscape.position.z = 0
 			landscape.rotation.x = Math.radians( -90 )
 

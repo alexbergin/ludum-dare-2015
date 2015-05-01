@@ -49,6 +49,7 @@ define [
 			"spikes"
 			"input"
 			"fan"
+			"level"
 		]
 
 		# what modules to call .loop() on
@@ -107,10 +108,7 @@ define [
 			@.renderer = new THREE.WebGLRenderer
 
 			# get the landscape scale
-			width = @.level.width * @.level.gridSize
-			height = @.level.height * @.level.gridSize
-			scale = ( width + height ) / 2
-			mult = ( scale / 600  )
+			mult = 1500 / 600 
 
 			# scene preferences
 			@.scene.fog = new THREE.Fog 0xCDE6F2 , 750 *  mult , 1750 * mult

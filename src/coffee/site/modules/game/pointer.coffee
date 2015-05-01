@@ -3,6 +3,8 @@ define ->
 	# gets the grid position of the cursor
 	class Pointer
 
+		activeObject: null
+
 		# the cursor position on the screen
 		screen:
 			x: 0 , y: 0
@@ -10,6 +12,7 @@ define ->
 		# the vector of the cursor
 		position:
 			x: 0 , y: 0 , z: 0
+			faceIndex: 0
 
 		init: ->
 
@@ -69,17 +72,27 @@ define ->
 
 				# loop through the intersects until we hit the first mesh
 				intersect = intersects[0]
+				found = false
 				i = 0
-				while intersect.object.type isnt "Mesh" and i < intersects.length
-					intersect = intersects[i]
-					i++
+
+				while found is false and i < intersects.length
+
+					# make sure it's a mesh and not excluded
+					valid = true
+					if intersect.object.type is "Mesh" and intersect.object.pointerDetection isnt false
+						found = true
+					else
+						intersect = intersects[i]
+						i++
 
 				# save the point if the intersection isnt null
-				if intersect.object.type is "Mesh" then @.setPosition intersect
+				if found then @.setPosition intersect
 
 		setPosition: ( intersect ) ->
 
 			# save the position
 			@.position = intersect.point
+			@.position.faceIndex = intersect.faceIndex
+			@.activeObject = intersect.object
 
 
